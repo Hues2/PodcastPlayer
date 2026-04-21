@@ -7,15 +7,14 @@
 
 import Foundation
 import PodcastPlayerNetworkingKit
+import Factory
 
 @Observable
 final class PodcastListViewModel {
     private(set) var state: ViewState = .idle
-    private let networkService: NetworkService
 
-    init(networkService: NetworkService = NetworkServiceImpl()) {
-        self.networkService = networkService
-    }
+    // Dependencies
+    @ObservationIgnored @Injected(\.networkService) private var networkService
 
     func fetchPodcasts() async {
         guard case .idle = state else { return }
@@ -45,8 +44,7 @@ extension PodcastListViewModel {
     struct FetchPodcastListRequest: NetworkRequest {
         typealias Response = PodcastListDTO
 
-        var baseURL: URL { URL(string: "https://the-podcasts.fly.dev")! }
-        var path: String { "/v1/toplist" }
+        var path: String { "toplist" }
         var method: HTTPMethod { .get }
     }
 }

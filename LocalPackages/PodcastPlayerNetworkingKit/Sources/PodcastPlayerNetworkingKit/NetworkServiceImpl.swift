@@ -9,13 +9,16 @@ import Foundation
 
 public final class NetworkServiceImpl: NetworkService {
     private let session: URLSession
+    private let baseURL: String
 
-    public init(session: URLSession = .shared) {
+    public init(baseURL: String, session: URLSession = .shared) {
+        self.baseURL = baseURL
         self.session = session
     }
-    
+
     public func perform<R: NetworkRequest>(_ request: R) async throws -> R.Response {
-        let urlRequest = try request.asURLRequest()
+        guard let url = URL(string: baseURL) else { throw NetworkError.invalidURL }
+        let urlRequest = try request.asURLRequest(baseURL: url)
 
         let data: Data
         let response: URLResponse

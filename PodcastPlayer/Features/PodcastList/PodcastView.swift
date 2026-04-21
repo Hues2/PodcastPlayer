@@ -6,46 +6,25 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct PodcastView: View {
     let podcast: PodcastUIModel
 
     var body: some View {
-        HStack(spacing: 12) {
-            // Podcast artwork placeholder
-            RoundedRectangle(cornerRadius: 12)
-                .fill(Color.gray.opacity(0.3))
-                .frame(width: 80, height: 80)
-                .overlay {
-                    Image(systemName: "headphones")
-                        .font(.title)
-                        .foregroundStyle(.secondary)
-                }
-
-            VStack(alignment: .leading, spacing: 4) {
-                Text(podcast.title)
-                    .font(.headline)
-                    .lineLimit(1)
-
-                if let author = podcast.author {
-                    Text(author)
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
-                        .lineLimit(1)
-                }
-
-                if let description = podcast.description {
-                    Text(description)
-                        .font(.caption)
-                        .foregroundStyle(.tertiary)
-                        .lineLimit(2)
-                }
-            }
-
-            Spacer(minLength: 0)
-        }
-        .padding(.vertical, 4)
+        content
     }
+}
+
+// MARK: - View Content
+private extension PodcastView {
+    var content: some View {
+        Text("Hey")
+    }
+
+//    var image: some View {
+//        
+//    }
 }
 
 #Preview {

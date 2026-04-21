@@ -6,15 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		2E8BE0A02F97D986007FE4BF /* PodcastPlayerNetworkingKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2E8BE09F2F97D986007FE4BF /* PodcastPlayerNetworkingKit */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		2E8BE07F2F97D0F3007FE4BF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2E8BE0692F97D0F2007FE4BF /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2E8BE0702F97D0F2007FE4BF;
-			remoteInfo = PodcastPlayer;
-		};
-		2E8BE0892F97D0F3007FE4BF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2E8BE0692F97D0F2007FE4BF /* Project object */;
 			proxyType = 1;
@@ -26,7 +23,6 @@
 /* Begin PBXFileReference section */
 		2E8BE0712F97D0F2007FE4BF /* PodcastPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PodcastPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E8BE07E2F97D0F3007FE4BF /* PodcastPlayerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PodcastPlayerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		2E8BE0882F97D0F3007FE4BF /* PodcastPlayerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PodcastPlayerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -47,17 +43,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E8BE0A02F97D986007FE4BF /* PodcastPlayerNetworkingKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		2E8BE07B2F97D0F3007FE4BF /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2E8BE0852F97D0F3007FE4BF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -81,7 +71,6 @@
 			children = (
 				2E8BE0712F97D0F2007FE4BF /* PodcastPlayer.app */,
 				2E8BE07E2F97D0F3007FE4BF /* PodcastPlayerTests.xctest */,
-				2E8BE0882F97D0F3007FE4BF /* PodcastPlayerUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -106,6 +95,7 @@
 			);
 			name = PodcastPlayer;
 			packageProductDependencies = (
+				2E8BE09F2F97D986007FE4BF /* PodcastPlayerNetworkingKit */,
 			);
 			productName = PodcastPlayer;
 			productReference = 2E8BE0712F97D0F2007FE4BF /* PodcastPlayer.app */;
@@ -134,26 +124,6 @@
 			productReference = 2E8BE07E2F97D0F3007FE4BF /* PodcastPlayerTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		2E8BE0872F97D0F3007FE4BF /* PodcastPlayerUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2E8BE0982F97D0F3007FE4BF /* Build configuration list for PBXNativeTarget "PodcastPlayerUITests" */;
-			buildPhases = (
-				2E8BE0842F97D0F3007FE4BF /* Sources */,
-				2E8BE0852F97D0F3007FE4BF /* Frameworks */,
-				2E8BE0862F97D0F3007FE4BF /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				2E8BE08A2F97D0F3007FE4BF /* PBXTargetDependency */,
-			);
-			name = PodcastPlayerUITests;
-			packageProductDependencies = (
-			);
-			productName = PodcastPlayerUITests;
-			productReference = 2E8BE0882F97D0F3007FE4BF /* PodcastPlayerUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -171,10 +141,6 @@
 						CreatedOnToolsVersion = 26.4;
 						TestTargetID = 2E8BE0702F97D0F2007FE4BF;
 					};
-					2E8BE0872F97D0F3007FE4BF = {
-						CreatedOnToolsVersion = 26.4;
-						TestTargetID = 2E8BE0702F97D0F2007FE4BF;
-					};
 				};
 			};
 			buildConfigurationList = 2E8BE06C2F97D0F2007FE4BF /* Build configuration list for PBXProject "PodcastPlayer" */;
@@ -186,6 +152,9 @@
 			);
 			mainGroup = 2E8BE0682F97D0F2007FE4BF;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				2E8BE09E2F97D986007FE4BF /* XCLocalSwiftPackageReference "LocalPackages/PodcastPlayerNetworkingKit" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 2E8BE0722F97D0F2007FE4BF /* Products */;
 			projectDirPath = "";
@@ -193,7 +162,6 @@
 			targets = (
 				2E8BE0702F97D0F2007FE4BF /* PodcastPlayer */,
 				2E8BE07D2F97D0F3007FE4BF /* PodcastPlayerTests */,
-				2E8BE0872F97D0F3007FE4BF /* PodcastPlayerUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -207,13 +175,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		2E8BE07C2F97D0F3007FE4BF /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2E8BE0862F97D0F3007FE4BF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -237,13 +198,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2E8BE0842F97D0F3007FE4BF /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -251,11 +205,6 @@
 			isa = PBXTargetDependency;
 			target = 2E8BE0702F97D0F2007FE4BF /* PodcastPlayer */;
 			targetProxy = 2E8BE07F2F97D0F3007FE4BF /* PBXContainerItemProxy */;
-		};
-		2E8BE08A2F97D0F3007FE4BF /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2E8BE0702F97D0F2007FE4BF /* PodcastPlayer */;
-			targetProxy = 2E8BE0892F97D0F3007FE4BF /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -489,46 +438,6 @@
 			};
 			name = Release;
 		};
-		2E8BE0992F97D0F3007FE4BF /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = UD7DDMT4QH;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "greg-ross.PodcastPlayerUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = PodcastPlayer;
-			};
-			name = Debug;
-		};
-		2E8BE09A2F97D0F3007FE4BF /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = UD7DDMT4QH;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "greg-ross.PodcastPlayerUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = PodcastPlayer;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -559,16 +468,21 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2E8BE0982F97D0F3007FE4BF /* Build configuration list for PBXNativeTarget "PodcastPlayerUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				2E8BE0992F97D0F3007FE4BF /* Debug */,
-				2E8BE09A2F97D0F3007FE4BF /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		2E8BE09E2F97D986007FE4BF /* XCLocalSwiftPackageReference "LocalPackages/PodcastPlayerNetworkingKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = LocalPackages/PodcastPlayerNetworkingKit;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2E8BE09F2F97D986007FE4BF /* PodcastPlayerNetworkingKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PodcastPlayerNetworkingKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 2E8BE0692F97D0F2007FE4BF /* Project object */;
 }

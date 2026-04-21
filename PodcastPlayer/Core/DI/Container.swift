@@ -11,7 +11,7 @@ import PodcastPlayerNetworkingKit
 
 extension Container {
     var networkService: Factory<NetworkService> {
-        self { NetworkServiceImpl(baseURL: "https://the-podcasts.fly.dev/v1/") }
-            .singleton
+        let baseUrl: String = Utils.infoPlistValue(for: "API_BASE_URL") ?? ""
+        return self { NetworkServiceImpl(baseURL: baseUrl) }.singleton
     }
 }

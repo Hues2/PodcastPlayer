@@ -27,9 +27,22 @@
 		2E8BE07E2F97D0F3007FE4BF /* PodcastPlayerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PodcastPlayerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		2E8BE0CB2F97FC30007FE4BF /* Exceptions for "PodcastPlayer" folder in "PodcastPlayer" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 2E8BE0702F97D0F2007FE4BF /* PodcastPlayer */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		2E8BE0732F97D0F2007FE4BF /* PodcastPlayer */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				2E8BE0CB2F97FC30007FE4BF /* Exceptions for "PodcastPlayer" folder in "PodcastPlayer" target */,
+			);
 			path = PodcastPlayer;
 			sourceTree = "<group>";
 		};
@@ -348,6 +361,7 @@
 				DEVELOPMENT_TEAM = UD7DDMT4QH;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PodcastPlayer/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -380,6 +394,7 @@
 				DEVELOPMENT_TEAM = UD7DDMT4QH;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = PodcastPlayer/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

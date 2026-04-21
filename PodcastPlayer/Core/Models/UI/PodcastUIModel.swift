@@ -13,7 +13,7 @@ struct PodcastUIModel: Identifiable {
     let author: String?
     let categoryIds: [Int]?
     let description: String?
-    let imageId: String?
+    let imageURL: URL?
     let languageIso: String?
     let link: String?
     let popularity: Double?
@@ -31,7 +31,12 @@ extension PodcastUIModel {
         self.author = dto.author
         self.categoryIds = dto.categoryIds ?? []
         self.description = dto.description
-        self.imageId = dto.image
+        if let baseUrl: String = Utils.infoPlistValue(for: "API_BASE_URL"),
+           let imageId = dto.image {
+            self.imageURL = URL(string: "\(baseUrl)images/\(imageId)")
+        } else {
+            self.imageURL = nil
+        }
         self.languageIso = dto.languageIso
         self.link = dto.link
         self.popularity = dto.popularity ?? 0

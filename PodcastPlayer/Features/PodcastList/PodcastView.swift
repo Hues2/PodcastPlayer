@@ -34,7 +34,7 @@ private extension PodcastView {
         author: "Goalhanger",
         categoryIds: [1487],
         description: "Take a deep dive into History's biggest moments with Tom Holland & Dominic Sandbrook.\n\nExplore the stories of History's most brutal rulers, deadly battles, and world-changing events.",
-        imageId: "c22c9113-a022-5940-bc79-bd4fea8b1c04",
+        imageURL: URL(string: "https://the-podcasts.fly.dev/v1/images/c22c9113-a022-5940-bc79-bd4fea8b1c04"),
         languageIso: "en",
         link: "http://therestishistory.com",
         popularity: 8136.05,

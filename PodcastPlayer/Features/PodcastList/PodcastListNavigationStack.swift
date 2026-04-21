@@ -8,8 +8,18 @@
 import SwiftUI
 
 struct PodcastListNavigationStack: View {
+    @State private var router = NavigationRouter<PodcastListScreen>()
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack(path: $router.path) {
+            Text("Podcast List")
+                .navigationDestination(for: PodcastListScreen.self) { screen in
+                    switch screen {
+                    case .podcastDetail(let id):
+                        Text("Podcast Detail")
+                    }
+                }
+        }
     }
 }
 

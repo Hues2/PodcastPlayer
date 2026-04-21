@@ -7,14 +7,14 @@
 
 import Foundation
 
-final class NetworkServiceImpl: NetworkService {
+public final class NetworkServiceImpl: NetworkService {
     private let session: URLSession
 
-    init(session: URLSession = .shared) {
+    public init(session: URLSession = .shared) {
         self.session = session
     }
     
-    func perform<R: NetworkRequest>(_ request: R) async throws -> R.Response {
+    public func perform<R: NetworkRequest>(_ request: R) async throws -> R.Response {
         let urlRequest = try request.asURLRequest()
 
         let data: Data

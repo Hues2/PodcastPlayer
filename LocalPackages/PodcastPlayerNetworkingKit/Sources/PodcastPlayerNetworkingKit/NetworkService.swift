@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol NetworkService {
+public protocol NetworkService {
     func perform<R: NetworkRequest>(_ request: R) async throws -> R.Response
 }

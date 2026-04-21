@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol NetworkRequest {
+public protocol NetworkRequest {
     associatedtype Response: Decodable
     
     var baseURL: URL { get }
@@ -20,12 +20,12 @@ protocol NetworkRequest {
 }
 
 extension NetworkRequest {
-    var headers: [String: String]? { nil }
-    var queryItems: [URLQueryItem]? { nil }
-    var body: Encodable? { nil }
-    var decoder: JSONDecoder { JSONDecoder() }
-    
-    func asURLRequest() throws -> URLRequest {
+    public var headers: [String: String]? { nil }
+    public var queryItems: [URLQueryItem]? { nil }
+    public var body: Encodable? { nil }
+    public var decoder: JSONDecoder { JSONDecoder() }
+
+    public func asURLRequest() throws -> URLRequest {
         var components = URLComponents(url: baseURL.appendingPathComponent(path), resolvingAgainstBaseURL: true)
         components?.queryItems = queryItems
         

@@ -19,12 +19,37 @@ struct PodcastView: View {
 // MARK: - View Content
 private extension PodcastView {
     var content: some View {
-        Text("Hey")
+        VStack(alignment: .leading, spacing: 8) {
+            imageView
+            infoView
+        }
+        .frame(width: 150)
     }
 
-//    var image: some View {
-//        
-//    }
+    var imageView: some View {
+        KFImage(podcast.imageURL)
+            .resizable()
+            .scaledToFill()
+            .frame(width: 150, height: 150)
+            .clipShape(.rect(cornerRadius: 20))            
+    }
+
+    var infoView: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(podcast.title)
+                .font(.headline)
+                .fontWeight(.semibold)
+                .lineLimit(2)
+
+            if let author = podcast.author {
+                Text(author)
+                    .font(.subheadline)
+                    .fontWeight(.light)
+                    .lineLimit(1)
+            }
+        }
+        .foregroundStyle(.primary)
+    }
 }
 
 #Preview {

@@ -11,6 +11,13 @@ import Kingfisher
 struct PodcastDetailView: View {
     let podcast: PodcastUIModel
 
+    @State private var viewModel: PodcastDetailViewModel
+
+    init(podcast: PodcastUIModel) {
+        self.podcast = podcast
+        self._viewModel = State(initialValue: PodcastDetailViewModel(podcastId: podcast.id))
+    }
+
     // Scroll State
     @State private var scrollOffset: CGFloat = 0
     @State private var scrollPosition = ScrollPosition()

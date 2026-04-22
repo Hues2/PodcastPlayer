@@ -17,9 +17,9 @@ enum AppError: LocalizedError {
         case .custom(let title):
             return title
         case .noPodcastsAvailable:
-            return String(localized: "No Podcasts Found", table: "ErrorCatalog")
+            return String.error("No Podcasts Found")
         case .default:
-            return String(localized: "Oops, Something Went Wrong", table: "ErrorCatalog")
+            return String.error("Oops, Something Went Wrong")
         }
     }
 
@@ -28,9 +28,9 @@ enum AppError: LocalizedError {
         case .custom(let message):
             return message
         case .noPodcastsAvailable:
-            return String(localized: "We couldn't find any podcasts right now. Please try again later.", table: "ErrorCatalog")
+            return String.error("We couldn't find any podcasts right now. Please try again later.")
         case .default:
-            return String(localized: "An unexpected error occurred. Please try again.", table: "ErrorCatalog")
+            return String.error("An unexpected error occurred. Please try again.")
         }
     }
 }

@@ -4,5 +4,9 @@
 <dict>
 	<key>API_BASE_URL</key>
 	<string>https://the-podcasts.fly.dev/v1/</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+	</array>
 </dict>
 </plist>

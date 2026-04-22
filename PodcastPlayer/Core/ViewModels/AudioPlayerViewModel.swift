@@ -22,33 +22,21 @@ final class AudioPlayerViewModel {
 
 // MARK: - Service Playback Methods
 extension AudioPlayerViewModel {
-    func play(episode: EpisodeUIModel) {
+    func startPlaying(episode: EpisodeUIModel) {
         guard let url = episode.audioURL else { return }
 
         withAnimation(.snappy(duration: 0.3)) {
             self.currentlyPlayingEpisode = episode
         }
 
-        Task {
-            await audioPlayerService.play(url: url)
-        }
+        audioPlayerService.startPlaying(url: url)
     }
 
     func resume() {
-        Task {
-            await audioPlayerService.resume()
-        }
+        audioPlayerService.resume()
     }
 
     func pause() {
-        Task {
-            await audioPlayerService.pause()
-        }
-    }
-
-    func stop() {
-        Task {
-            await audioPlayerService.stop()
-        }
+        audioPlayerService.pause()
     }
 }

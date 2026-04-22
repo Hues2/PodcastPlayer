@@ -1,38 +1,28 @@
 import AVFoundation
 import Foundation
 
-@MainActor
-public final class AudioPlayerServiceImpl: AudioPlayerService, @unchecked Sendable {
+public final class AudioPlayerServiceImpl: AudioPlayerService {
     // MARK: - Properties
     private var player: AVPlayer?
-    private var playerItem: AVPlayerItem?
-    private var statusObservation: NSKeyValueObservation?
+    private var session = AVAudioSession.sharedInstance()
 
     // MARK: - Initialization
     public init() {}
 
     // MARK: - AudioPlayerService
-    public func play(url: URL) {
-        cleanUp()
+    public func startPlaying(url: URL) {
+        activateSession()
 
-        let item = AVPlayerItem(url: url)
-        playerItem = item
+        let playerItem: AVPlayerItem = AVPlayerItem(url: url)
 
-        let avPlayer = AVPlayer(playerItem: item)
-        player = avPlayer
+        if let player = player {
+            player.replaceCurrentItem(with: playerItem)
+        } else {
+            player = AVPlayer(playerItem: playerItem)
+        }
 
-        statusObservation = item.observe(\.status, options: [.new]) { [weak self] item, _ in
-            Task { @MainActor [weak self] in
-                guard let self else { return }
-                switch item.status {
-                case .readyToPlay:
-                    self.player?.play()
-                case .failed:
-                    break
-                default:
-                    break
-                }
-            }
+        if let player = player {
+            player.play()
         }
     }
 
@@ -44,17 +34,39 @@ public final class AudioPlayerServiceImpl: AudioPlayerService, @unchecked Sendab
         player?.play()
     }
 
-    public func stop() {
-        cleanUp()
+    public func getPlaybackDuration() -> Double {
+        guard let player = player else {
+            return 0
+        }
+
+        return player.currentItem?.duration.seconds ?? 0
+    }
+}
+
+private extension AudioPlayerServiceImpl {
+    func activateSession() {
+        do {
+            try session.setCategory(
+                .playback,
+                mode: .default,
+                options: []
+            )
+        } catch _ {}
+
+        do {
+            try session.setActive(true, options: .notifyOthersOnDeactivation)
+        } catch _ {}
+
+        do {
+            try session.overrideOutputAudioPort(.speaker)
+        } catch _ {}
     }
 
-    // MARK: - Private
-
-    private func cleanUp() {
-        statusObservation?.invalidate()
-        statusObservation = nil
-        player?.pause()
-        player = nil
-        playerItem = nil
+    func deactivateSession() {
+        do {
+            try session.setActive(false, options: .notifyOthersOnDeactivation)
+        } catch let error as NSError {
+            print("Failed to deactivate audio session: \(error.localizedDescription)")
+        }
     }
 }

@@ -1,8 +1,8 @@
 import Foundation
 
-public protocol AudioPlayerService: Sendable {
-    func play(url: URL) async
-    func pause() async
-    func resume() async
-    func stop() async
+public protocol AudioPlayerService {
+    func startPlaying(url: URL)
+    func pause()
+    func resume()
+    func getPlaybackDuration() -> Double
 }

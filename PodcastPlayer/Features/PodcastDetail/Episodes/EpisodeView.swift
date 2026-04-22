@@ -29,7 +29,7 @@ private extension EpisodeView {
                     Text(description)
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
-                        .lineLimit(2)
+                        .lineLimit(3)
                 }
 
                 HStack(spacing: 12) {
@@ -43,10 +43,9 @@ private extension EpisodeView {
                 }
                 .font(.caption)
                 .foregroundStyle(.tertiary)
-                .padding(.top, 4)
+                .padding(.top, 8)
             }
-
-            Spacer()
+            .frame(maxWidth: .infinity, alignment: .leading)
 
             Image(systemName: "play.circle.fill")
                 .font(.title2)

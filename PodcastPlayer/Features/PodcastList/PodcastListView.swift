@@ -51,11 +51,11 @@ private extension PodcastListView {
 
     func podcastSection(_ categoryId: Int, _ podcasts: [PodcastUIModel]) -> some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Category \(categoryId)")
+            Text(.podcastList("Category \(categoryId)"))
                 .font(.title3)
                 .fontWeight(.bold)
                 .foregroundStyle(.primary)
-                .padding(.horizontal, 12)
+                .padding(.horizontal, 24)
 
             ScrollView(.horizontal) {
                 LazyHStack(spacing: 16) {
@@ -67,7 +67,7 @@ private extension PodcastListView {
                             }
                     }
                 }
-                .padding(.horizontal, 12)
+                .padding(.horizontal, 24)
             }
             .scrollIndicators(.hidden)
             .scrollBounceBehavior(.basedOnSize)

@@ -12,10 +12,7 @@ struct EpisodeListView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 32) {
-            Text(.podcastDetail("Episodes"))
-                .font(.title)
-                .fontWeight(.semibold)
-                .foregroundStyle(.primary)
+            header
 
             if episodes.isEmpty {
                 emptyListView
@@ -24,6 +21,16 @@ struct EpisodeListView: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    var header: some View {
+        HStack(alignment: .center, spacing: 4) {
+            Image(systemName: "list.bullet")
+            Text(.podcastDetail("Episodes"))
+        }
+        .font(.title)
+        .fontWeight(.semibold)
+        .foregroundStyle(.primary)
     }
 
     var emptyListView: some View {

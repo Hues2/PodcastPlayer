@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "Category %d" : {
+      "extractionState" : "manual"
+    },
     "Featured" : {
       "extractionState" : "manual"
     }

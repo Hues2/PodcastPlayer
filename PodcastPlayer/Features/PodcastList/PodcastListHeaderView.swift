@@ -10,7 +10,7 @@ import Kingfisher
 
 struct PodcastListHeaderView: View {
     let podcast: PodcastUIModel
-    
+
     var body: some View {
         content
     }
@@ -24,7 +24,7 @@ private extension PodcastListHeaderView {
             infoView
         }
     }
-    
+
     var image: some View {
         KFImage(podcast.imageURL)
             .resizable()
@@ -34,19 +34,22 @@ private extension PodcastListHeaderView {
             .clipped()
             .stretchy()
     }
-    
+
     var infoView: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text(.podcastList("Featured"))
-                .font(.subheadline)
-                .fontWeight(.semibold)
-                .foregroundStyle(Color.accentColor)
-            
+            HStack(alignment: .center, spacing: 4) {
+                Image(systemName: "sparkles")
+                Text(.podcastList("Featured"))
+            }
+            .font(.subheadline)
+            .fontWeight(.semibold)
+            .foregroundStyle(Color.accentColor)
+
             Text(podcast.title)
                 .font(.title2)
                 .fontWeight(.bold)
                 .foregroundStyle(.primary)
-            
+
             if let description = podcast.description {
                 Text(description)
                     .font(.subheadline)
@@ -56,7 +59,7 @@ private extension PodcastListHeaderView {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.horizontal, 12)
+        .padding(.horizontal, 24)
     }
 }
 

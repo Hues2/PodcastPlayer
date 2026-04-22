@@ -31,12 +31,12 @@ private extension PodcastDetailContentView {
 
             VStack(alignment: .leading, spacing: 40) {
                 infoView
-                    .padding(.horizontal, 12)
+                    .padding(.horizontal, 24)
 
                 Divider()
 
                 EpisodesStateView(listState: episodeListState)
-                    .padding(.horizontal, 12)
+                    .padding(.horizontal, 24)
             }
         }
         .padding(.bottom, 24)

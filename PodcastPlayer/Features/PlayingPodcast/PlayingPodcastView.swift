@@ -38,7 +38,8 @@ private extension PlayingPodcastView {
                     Text(episode.title)
                         .font(.subheadline)
                         .fontWeight(.semibold)
-                        .lineLimit(1)
+                        .lineLimit(2)
+                        .frame(maxHeight: .infinity, alignment: .top)
 
                     if let podcastTitle = episode.podcastTitle {
                         Text(podcastTitle)

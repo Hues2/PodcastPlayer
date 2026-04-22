@@ -23,7 +23,7 @@ final class PodcastListViewModel {
             let response = try await networkService.perform(FetchPodcastListRequest())
             let podcasts = response.results?.compactMap { PodcastUIModel($0) } ?? []
             
-            guard podcasts.isEmpty else { throw AppError.noPodcastsAvailable }
+            guard !podcasts.isEmpty else { throw AppError.noPodcastsAvailable }
 
             let listModel = LoadedUIModel(
                 // Featured podcast would be fetched from API - but it's not an option

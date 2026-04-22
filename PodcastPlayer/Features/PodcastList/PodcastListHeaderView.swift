@@ -19,44 +19,44 @@ struct PodcastListHeaderView: View {
 // MARK: - View Content
 private extension PodcastListHeaderView {
     var content: some View {
-        image
-            .overlay(alignment: .bottomLeading) {
-                infoView
-            }
+        VStack(spacing: 16) {
+            image
+            infoView
+        }
     }
 
     var image: some View {
         KFImage(podcast.imageURL)
             .resizable()
             .scaledToFill()
-            .frame(height: 350)
             .frame(maxWidth: .infinity)
+            .frame(maxHeight: 400)
             .clipped()
+            .stretchy()
     }
 
     var infoView: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: 4) {
+            Text("Featured")
+                .font(.subheadline)
+                .fontWeight(.semibold)
+                .foregroundStyle(Color.accentColor)
+
             Text(podcast.title)
-                .font(.title3)
+                .font(.title2)
                 .fontWeight(.bold)
                 .foregroundStyle(.primary)
 
             if let description = podcast.description {
                 Text(description)
-                    .font(.callout)
-                    .fontWeight(.regular)
+                    .font(.subheadline)
                     .foregroundStyle(.secondary)
+                    .lineLimit(2)
+                    .padding(.top, 4)
             }
         }
-        .frame(maxWidth: .infinity)
-        .padding(8)
-        .background {
-            LinearGradient(
-                colors: [.black.opacity(0.9), .black.opacity(0.7), .clear],
-                startPoint: .bottom,
-                endPoint: .top
-            )
-        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.horizontal, 12)
     }
 }
 
@@ -64,16 +64,16 @@ private extension PodcastListHeaderView {
     NavigationStack {
         PodcastListLoadedView(model: .init(
             featured: PodcastUIModel(
-                id: 41593,
-                title: "Crime Junkie",
-                author: "Audiochuck",
-                categoryIds: [1488],
-                description: "Does hearing about a true crime case always leave you scouring the internet for the truth behind the story?",
-                imageURL: URL(string: "https://the-podcasts.fly.dev/v1/images/36eecc73-1b1e-593d-91ad-073f7680babf"),
+                id: 35027,
+                title: "The Daily",
+                author: "The New York Times",
+                categoryIds: [1489, 1526],
+                description: "This is what the news should sound like.",
+                imageURL: URL(string: "https://the-podcasts.fly.dev/v1/images/fecafc63-6f75-51cd-abe2-e001cdfe4e40"),
                 languageIso: "en",
-                link: "https://audiochuck.com",
-                popularity: 8172.28,
-                rss: "https://feeds.simplecast.com/qm_9xx0g",
+                link: "https://www.nytimes.com/the-daily",
+                popularity: 8116.49,
+                rss: "https://feeds.simplecast.com/54nAGcIl",
                 seasonal: false,
                 type: "episodic"
             ),

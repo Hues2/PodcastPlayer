@@ -48,16 +48,16 @@ private extension PodcastListLoadedView {
     NavigationStack {
         PodcastListLoadedView(model: .init(
             featured: PodcastUIModel(
-                id: 41593,
-                title: "Crime Junkie",
-                author: "Audiochuck",
-                categoryIds: [1488],
-                description: "Does hearing about a true crime case always leave you scouring the internet for the truth behind the story?",
-                imageURL: URL(string: "https://the-podcasts.fly.dev/v1/images/36eecc73-1b1e-593d-91ad-073f7680babf"),
+                id: 35027,
+                title: "The Daily",
+                author: "The New York Times",
+                categoryIds: [1489, 1526],
+                description: "This is what the news should sound like.",
+                imageURL: URL(string: "https://the-podcasts.fly.dev/v1/images/fecafc63-6f75-51cd-abe2-e001cdfe4e40"),
                 languageIso: "en",
-                link: "https://audiochuck.com",
-                popularity: 8172.28,
-                rss: "https://feeds.simplecast.com/qm_9xx0g",
+                link: "https://www.nytimes.com/the-daily",
+                popularity: 8116.49,
+                rss: "https://feeds.simplecast.com/54nAGcIl",
                 seasonal: false,
                 type: "episodic"
             ),

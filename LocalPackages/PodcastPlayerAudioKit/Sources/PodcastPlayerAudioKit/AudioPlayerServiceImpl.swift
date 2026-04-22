@@ -5,11 +5,19 @@ public final class AudioPlayerServiceImpl: AudioPlayerService {
     // MARK: - Properties
     private var player: AVPlayer?
     private var session = AVAudioSession.sharedInstance()
+    private var timeControlStatusObservation: NSKeyValueObservation?
+    private var playbackStateContinuation: AsyncStream<PlaybackState>.Continuation?
+
+    public let playbackStateStream: AsyncStream<PlaybackState>
 
     // MARK: - Initialization
-    public init() {}
+    public init() {
+        var continuation: AsyncStream<PlaybackState>.Continuation!
+        playbackStateStream = AsyncStream { continuation = $0 }
+        playbackStateContinuation = continuation
+    }
 
-    // MARK: - AudioPlayerService    
+    // MARK: - AudioPlayerService
     public func startPlaying(url: URL) {
         activateSession()
 
@@ -22,6 +30,7 @@ public final class AudioPlayerServiceImpl: AudioPlayerService {
         }
 
         if let player {
+            observeTimeControlStatus(of: player)
             player.play()
         }
     }
@@ -40,6 +49,18 @@ public final class AudioPlayerServiceImpl: AudioPlayerService {
 }
 
 private extension AudioPlayerServiceImpl {
+    func observeTimeControlStatus(of player: AVPlayer) {
+        timeControlStatusObservation = player.observe(\.timeControlStatus) { [weak self] player, _ in
+            let state: PlaybackState = switch player.timeControlStatus {
+            case .paused: .paused
+            case .waitingToPlayAtSpecifiedRate: .loading
+            case .playing: .playing
+            @unknown default: .idle
+            }
+            self?.playbackStateContinuation?.yield(state)
+        }
+    }
+
     func activateSession() {
         do {
             try session.setCategory(

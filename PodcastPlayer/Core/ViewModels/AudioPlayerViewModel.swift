@@ -12,12 +12,27 @@ import PodcastPlayerAudioKit
 @Observable
 final class AudioPlayerViewModel {
     private(set) var currentlyPlayingEpisode: EpisodeUIModel?
-    private(set) var isPlaying: Bool = false
+    private(set) var playbackState: PlaybackState = .idle
+
+    var isPlaying: Bool { playbackState == .playing }
+    var isLoading: Bool { playbackState == .loading }
 
     @ObservationIgnored @Injected(\.audioPlayerService) private var audioPlayerService
 
     init(currentlyPlayingEpisode: EpisodeUIModel? = nil) {
         self.currentlyPlayingEpisode = currentlyPlayingEpisode
+        observePlaybackState()
+    }
+
+    private func observePlaybackState() {
+        Task { @MainActor [weak self] in
+            guard let self else { return }
+            for await state in audioPlayerService.playbackStateStream {
+                withAnimation(.snappy(duration: 0.3)) {
+                    self.playbackState = state
+                }
+            }
+        }
     }
 }
 
@@ -32,33 +47,13 @@ extension AudioPlayerViewModel {
         }
 
         audioPlayerService.startPlaying(url: url)
-
-        setIsPlaying(true)
     }
 
     func playPauseAction() {
-        if self.isPlaying {
-            self.pause()
+        if isPlaying {
+            audioPlayerService.pause()
         } else {
-            self.resume()
-        }
-    }
-
-    private func resume() {
-        audioPlayerService.resume()
-        setIsPlaying(true)
-    }
-
-    private func pause() {
-        audioPlayerService.pause()
-        setIsPlaying(false)
-    }
-}
-
-extension AudioPlayerViewModel {
-    func setIsPlaying(_ isPlaying: Bool) {
-        withAnimation(.snappy(duration: 0.3)) {
-            self.isPlaying = isPlaying
+            audioPlayerService.resume()
         }
     }
 }

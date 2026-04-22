@@ -17,7 +17,7 @@ struct PodcastDetailView: View {
         self.podcast = podcast
         self._viewModel = State(initialValue: PodcastDetailViewModel(podcastId: podcast.id))
     }
-
+    
     // Scroll State
     @State private var scrollOffset: CGFloat = 0
     @State private var scrollPosition = ScrollPosition()
@@ -25,6 +25,7 @@ struct PodcastDetailView: View {
 
     var body: some View {
         content
+            .task { await viewModel.fetchEpisodes() }
     }
 }
 
@@ -35,7 +36,11 @@ private extension PodcastDetailView {
                 image
                     .offset(y: max(0, scrollOffset))
 
-                PodcastDetailContentView(podcast: podcast, isScrolled: isScrolled)
+                PodcastDetailContentView(
+                    podcast: podcast,
+                    isScrolled: isScrolled,
+                    episodeListState: viewModel.episodeListState
+                )
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

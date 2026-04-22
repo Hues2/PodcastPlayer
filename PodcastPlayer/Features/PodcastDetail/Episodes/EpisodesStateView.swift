@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PodcastDetailEpisodesView: View {
+struct EpisodesStateView: View {
     let listState: PodcastDetailViewModel.EpisodeListState
 
     var body: some View {
@@ -15,7 +15,7 @@ struct PodcastDetailEpisodesView: View {
     }
 }
 
-private extension PodcastDetailEpisodesView {
+private extension EpisodesStateView {
     @ViewBuilder
     var content: some View {
         switch listState {
@@ -24,21 +24,21 @@ private extension PodcastDetailEpisodesView {
         case .error(let error):
             ErrorView(error: error)
         case .loaded(let episodes):
-            Text("Loaded")
+            EpisodeListView(episodes: episodes)
         }
     }
 }
 
 #Preview("Loading") {
-    PodcastDetailEpisodesView(listState: .loading)
+    EpisodesStateView(listState: .loading)
 }
 
 #Preview("Error") {
-    PodcastDetailEpisodesView(listState: .error(.default))
+    EpisodesStateView(listState: .error(.default))
 }
 
 #Preview("Loaded") {
-    PodcastDetailEpisodesView(listState: .loaded([
+    EpisodesStateView(listState: .loaded([
         EpisodeUIModel(
             id: 1,
             title: "Episode 1: The Beginning",
@@ -57,17 +57,6 @@ private extension PodcastDetailEpisodesView {
             duration: 2400,
             published: Date().addingTimeInterval(-86400),
             episode: 2,
-            season: 1,
-            type: "full",
-            audioURL: nil
-        ),
-        EpisodeUIModel(
-            id: 3,
-            title: "Episode 3: The End",
-            description: "A thrilling conclusion.",
-            duration: 3600,
-            published: Date().addingTimeInterval(-172800),
-            episode: 3,
             season: 1,
             type: "full",
             audioURL: nil

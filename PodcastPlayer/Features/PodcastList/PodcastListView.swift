@@ -7,36 +7,38 @@
 
 import SwiftUI
 
-struct PodcastListLoadedView: View {
+struct PodcastListView: View {
     let model: PodcastListViewModel.LoadedUIModel
-    
+
     @Environment(NavigationRouter<PodcastListScreen>.self) private var router
-    
+
     var body: some View {
         content
     }
 }
 
 // MARK: - View Content
-private extension PodcastListLoadedView {
+private extension PodcastListView {
     var content: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 60) {
+            VStack(alignment: .leading, spacing: 48) {
                 if let featurePodcast = model.featured {
                     PodcastListHeaderView(podcast: featurePodcast)
                         .contentShape(.rect)
                         .onTapGesture {
                             router.push(.podcastDetail(featurePodcast))
                         }
+
+                    Divider()
                 }
-                
+
                 podcastList
             }
         }
         .scrollIndicators(.hidden)
         .ignoresSafeArea()
     }
-    
+
     var podcastList: some View {
         VStack(alignment: .leading, spacing: 48) {
             ForEach(model.podcastsByCategory.keys.sorted(), id: \.self) { categoryId in
@@ -46,7 +48,7 @@ private extension PodcastListLoadedView {
             }
         }
     }
-    
+
     func podcastSection(_ categoryId: Int, _ podcasts: [PodcastUIModel]) -> some View {
         VStack(alignment: .leading, spacing: 16) {
             Text("Category \(categoryId)")
@@ -54,7 +56,7 @@ private extension PodcastListLoadedView {
                 .fontWeight(.bold)
                 .foregroundStyle(.primary)
                 .padding(.horizontal, 12)
-            
+
             ScrollView(.horizontal) {
                 LazyHStack(spacing: 16) {
                     ForEach(podcasts) { podcast in
@@ -75,7 +77,7 @@ private extension PodcastListLoadedView {
 
 #Preview {
     NavigationStack {
-        PodcastListLoadedView(model: .init(
+        PodcastListView(model: .init(
             featured: PodcastUIModel(
                 id: 35027,
                 title: "The Daily",

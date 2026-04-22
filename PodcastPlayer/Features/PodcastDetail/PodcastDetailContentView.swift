@@ -10,13 +10,14 @@ import SwiftUI
 struct PodcastDetailContentView: View {
     let podcast: PodcastUIModel
     let isScrolled: Bool
+    let episodeListState: PodcastDetailViewModel.EpisodeListState
 
     var body: some View {
         content
             .background(.background)
             .clipShape(.rect(cornerRadii: .init(
-                topLeading: 20,
-                topTrailing: 20
+                topLeading: 16,
+                topTrailing: 16
             )))
             .shadow(color: isScrolled ? .black.opacity(0.2) : .clear, radius: 2, x: 0, y: -4)
     }
@@ -28,9 +29,17 @@ private extension PodcastDetailContentView {
             SheetDragIndicator()
                 .opacity(isScrolled ? 1 : 0)
 
-            infoView
-                .padding(.horizontal, 12)
+            VStack(alignment: .leading, spacing: 40) {
+                infoView
+                    .padding(.horizontal, 12)
+
+                Divider()
+
+                EpisodesStateView(listState: episodeListState)
+                    .padding(.horizontal, 12)
+            }
         }
+        .padding(.bottom, 24)
     }
 
     var infoView: some View {

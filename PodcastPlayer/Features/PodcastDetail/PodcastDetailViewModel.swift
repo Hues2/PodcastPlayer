@@ -25,10 +25,12 @@ final class PodcastDetailViewModel {
     func fetchEpisodes() async {
         guard episodeListState.isIdle || episodeListState.isError else { return }
         episodeListState = .loading
+
         do {
             let response = try await networkService.perform(FetchEpisodesRequest(podcastId: podcastId))
             let episodes = response.results?.compactMap { EpisodeUIModel($0) } ?? []
 
+            // TODO: No episodes available - not podcasts
             guard !episodes.isEmpty else { throw AppError.noPodcastsAvailable }
 
             episodeListState = .loaded(episodes)

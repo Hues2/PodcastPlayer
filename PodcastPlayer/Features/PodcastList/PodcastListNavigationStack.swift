@@ -20,6 +20,7 @@ struct PodcastListNavigationStack: View {
                     }
                 }
         }
+        .environment(router)
     }
 }
 

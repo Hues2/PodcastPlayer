@@ -22,7 +22,14 @@ final class PodcastListViewModel {
         do {
             let response = try await networkService.perform(FetchPodcastListRequest())
             let podcasts = response.results?.compactMap { PodcastUIModel($0) } ?? []
-            state = .loaded(podcasts)
+            
+            guard !podcasts.isEmpty else { throw AppError.noPodcastsAvailable }
+
+            let listModel = LoadedUIModel(
+                featured: podcasts.randomElement(),
+                podcasts: podcasts
+            )
+            state = .loaded(listModel)
         } catch {
             state = .error(error)
         }
@@ -35,7 +42,12 @@ extension PodcastListViewModel {
         case idle
         case loading
         case error(Error)
-        case loaded([PodcastUIModel])
+        case loaded(LoadedUIModel)
+    }
+
+    struct LoadedUIModel {
+        let featured: PodcastUIModel?
+        let podcasts: [PodcastUIModel]
     }
 }
 

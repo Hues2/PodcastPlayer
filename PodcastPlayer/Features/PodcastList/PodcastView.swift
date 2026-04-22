@@ -11,6 +11,10 @@ import Kingfisher
 struct PodcastView: View {
     let podcast: PodcastUIModel
 
+    private enum Layout {
+        static let width: CGFloat = 150
+    }
+
     var body: some View {
         content
     }
@@ -23,15 +27,15 @@ private extension PodcastView {
             imageView
             infoView
         }
-        .frame(width: 150)
+        .frame(width: Layout.width)
     }
 
     var imageView: some View {
         KFImage(podcast.imageURL)
             .resizable()
             .scaledToFill()
-            .frame(width: 150, height: 150)
-            .clipShape(.rect(cornerRadius: 20))            
+            .frame(width: Layout.width, height: Layout.width)
+            .clipShape(.rect(cornerRadius: 16))
     }
 
     var infoView: some View {

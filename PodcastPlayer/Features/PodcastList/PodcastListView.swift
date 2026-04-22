@@ -28,8 +28,8 @@ private extension PodcastListView {
         case .error(let error):
             // TODO: Create error view
             Text("ERROR")
-        case .loaded(let podcasts):
-            PodcastList(podcasts: podcasts)
+        case .loaded(let model):
+            PodcastListLoadedView(model: model)
         }
     }
 }

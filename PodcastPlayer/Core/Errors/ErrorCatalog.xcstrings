@@ -1,0 +1,9 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "No podcasts available" : {
+      "extractionState" : "manual"
+    }
+  },
+  "version" : "1.2"
+}

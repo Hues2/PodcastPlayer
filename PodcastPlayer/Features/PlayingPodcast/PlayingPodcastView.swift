@@ -16,7 +16,7 @@ struct PlayingPodcastView: View {
     private enum Layout {
         static let imageCornerRadius: CGFloat = 8
         static let imageSize: CGFloat = 64
-        static let padding: CGFloat = 12
+        static let padding: CGFloat = 16
     }
 
     var body: some View {
@@ -26,7 +26,7 @@ struct PlayingPodcastView: View {
 
 private extension PlayingPodcastView {
     var content: some View {
-        HStack(alignment: .center, spacing: 16) {
+        HStack(alignment: .center, spacing: 12) {
             HStack(spacing: 12) {
                 KFImage(episode.podcastImageURL)
                     .resizable()
@@ -51,6 +51,7 @@ private extension PlayingPodcastView {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
 
+
             playPauseButton
         }
         .padding(Layout.padding)
@@ -61,17 +62,24 @@ private extension PlayingPodcastView {
 
     var playPauseButton: some View {
         Button {
+            guard !audioPlayerViewModel.isLoading else { return }
             audioPlayerViewModel.playPauseAction()
         } label: {
-            Image(systemName: audioPlayerViewModel.isPlaying ? "pause.fill" : "play.fill")                
-                .contentTransition(.symbolEffect(.replace))
-                .font(.title3)
-                .foregroundStyle(.primary)
-                .contentShape(.rect)
-                .frame(maxHeight: .infinity)
-                .padding()
-                .background(.ultraThickMaterial)
-                .clipShape(.circle)
+            Group {
+                if audioPlayerViewModel.isLoading {
+                    ProgressView()
+                } else {
+                    Image(systemName: audioPlayerViewModel.isPlaying ? "pause.fill" : "play.fill")
+                }
+            }
+            .contentTransition(.symbolEffect(.replace))
+            .font(.title3)
+            .foregroundStyle(.primary)
+            .contentShape(.rect)
+            .frame(maxHeight: .infinity)
+            .frame(width: 40)
+            .background(.ultraThickMaterial)
+            .clipShape(.circle)
         }
         .buttonStyle(.plain)
     }

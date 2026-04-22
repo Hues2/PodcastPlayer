@@ -15,7 +15,7 @@ final class AudioPlayerViewModel {
     private(set) var playbackState: PlaybackState = .idle
 
     var isPlaying: Bool { playbackState == .playing }
-    var isLoading: Bool { playbackState == .loading }
+    var isLoading: Bool { playbackState == .loading || playbackState == .idle }
 
     @ObservationIgnored @Injected(\.audioPlayerService) private var audioPlayerService
 

@@ -3,6 +3,9 @@
   "strings" : {
     "Episodes" : {
       "extractionState" : "manual"
+    },
+    "No episodes available" : {
+      "extractionState" : "manual"
     }
   },
   "version" : "1.2"

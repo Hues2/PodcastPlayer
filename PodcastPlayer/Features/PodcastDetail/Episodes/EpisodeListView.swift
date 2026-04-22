@@ -9,11 +9,37 @@ import SwiftUI
 
 struct EpisodeListView: View {
     let episodes: [EpisodeUIModel]
-    
+
     var body: some View {
-        LazyVStack(alignment: .leading, spacing: 25) {
+        VStack(alignment: .leading, spacing: 32) {
+            Text(.podcastDetail("Episodes"))
+                .font(.title)
+                .fontWeight(.semibold)
+                .foregroundStyle(.primary)
+
+            if episodes.isEmpty {
+                emptyListView
+            } else {
+                listView
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    var emptyListView: some View {
+        Text(.podcastDetail("No episodes available"))
+            .font(.subheadline)
+            .foregroundStyle(.secondary)
+    }
+
+    var listView: some View {
+        LazyVStack(alignment: .leading, spacing: 24) {
             ForEach(episodes) { episode in
                 EpisodeView(episode: episode)
+
+                if episodes.last != episode {
+                    Divider()
+                }
             }
         }
     }
@@ -44,4 +70,8 @@ struct EpisodeListView: View {
             audioURL: nil
         ),
     ])
+}
+
+#Preview("Empty") {
+    EpisodeListView(episodes: [])
 }

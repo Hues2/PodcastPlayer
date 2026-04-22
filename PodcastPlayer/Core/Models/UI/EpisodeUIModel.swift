@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct EpisodeUIModel: Identifiable {
+struct EpisodeUIModel: Identifiable, Hashable {
     let id: Int
     let title: String
     let description: String?

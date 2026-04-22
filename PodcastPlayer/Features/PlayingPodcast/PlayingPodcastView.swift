@@ -18,35 +18,32 @@ struct PlayingPodcastView: View {
     }
 
     var body: some View {
-        HStack(spacing: 12) {
-            KFImage(episode.podcastImageURL)
-                .resizable()
-                .scaledToFill()
-                .frame(width: Layout.imageSize, height: Layout.imageSize)
-                .clipShape(RoundedRectangle(cornerRadius: Layout.imageCornerRadius))
+        HStack(alignment: .center, spacing: 8) {
+            HStack(spacing: 12) {
+                KFImage(episode.podcastImageURL)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: Layout.imageSize, height: Layout.imageSize)
+                    .clipShape(RoundedRectangle(cornerRadius: Layout.imageCornerRadius))
 
-            VStack(alignment: .leading, spacing: 2) {
-                Text(episode.title)
-                    .font(.subheadline)
-                    .fontWeight(.semibold)
-                    .lineLimit(1)
-
-                if let podcastTitle = episode.podcastTitle {
-                    Text(podcastTitle)
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(episode.title)
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
                         .lineLimit(1)
+
+                    if let podcastTitle = episode.podcastTitle {
+                        Text(podcastTitle)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            .lineLimit(1)
+                    }
                 }
             }
-
-            Spacer()
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
         .padding(Layout.padding)
         .background(.ultraThickMaterial)
-        .clipShape(.rect(cornerRadii: .init(
-            topLeading: Layout.imageCornerRadius + Layout.padding,
-            topTrailing: Layout.imageCornerRadius + Layout.padding
-        )))
         .ignoresSafeArea()
     }
 }

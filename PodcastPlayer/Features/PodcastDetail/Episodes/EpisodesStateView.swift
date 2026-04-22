@@ -12,6 +12,7 @@ struct EpisodesStateView: View {
 
     var body: some View {
         content
+            .frame(maxWidth: .infinity, alignment: .center)
     }
 }
 

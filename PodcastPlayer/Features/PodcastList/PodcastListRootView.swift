@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PodcastListView: View {
+struct PodcastListRootView: View {
     @State private var viewModel = PodcastListViewModel()
 
     var body: some View {
@@ -17,7 +17,7 @@ struct PodcastListView: View {
 }
 
 // MARK: - View Content
-private extension PodcastListView {
+private extension PodcastListRootView {
     @ViewBuilder
     var content: some View {
         switch viewModel.state {
@@ -26,8 +26,11 @@ private extension PodcastListView {
         case .loading:
             ProgressView()
         case .error(let error):
-            // TODO: Create error view
-            Text("ERROR")
+            ErrorView(error: error) {
+                Task {
+                    await viewModel.fetchPodcasts()
+                }
+            }
         case .loaded(let model):
             PodcastListLoadedView(model: model)
         }
@@ -35,5 +38,5 @@ private extension PodcastListView {
 }
 
 #Preview {
-    PodcastListView()
+    PodcastListRootView()
 }

@@ -12,11 +12,11 @@ struct PodcastListNavigationStack: View {
 
     var body: some View {
         NavigationStack(path: $router.path) {
-            PodcastListView()
+            PodcastListRootView()
                 .navigationDestination(for: PodcastListScreen.self) { screen in
                     switch screen {
                     case .podcastDetail(let id):
-                        Text("Podcast Detail")
+                        Text("Podcast Detail \(id)")
                     }
                 }
         }

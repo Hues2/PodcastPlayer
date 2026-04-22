@@ -37,7 +37,7 @@ private extension PodcastListHeaderView {
 
     var infoView: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text("Featured")
+            Text(.podcastList("Featured"))
                 .font(.subheadline)
                 .fontWeight(.semibold)
                 .foregroundStyle(Color.accentColor)

@@ -1,7 +1,16 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "No podcasts available" : {
+    "An unexpected error occurred. Please try again." : {
+      "extractionState" : "manual"
+    },
+    "No Podcasts Found" : {
+      "extractionState" : "manual"
+    },
+    "Oops, Something Went Wrong" : {
+      "extractionState" : "manual"
+    },
+    "We couldn't find any podcasts right now. Please try again later." : {
       "extractionState" : "manual"
     }
   },

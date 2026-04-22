@@ -17,13 +17,13 @@ final class PodcastListViewModel {
     @ObservationIgnored @Injected(\.networkService) private var networkService
 
     func fetchPodcasts() async {
-        guard case .idle = state else { return }
+        guard state.isIdle || state.isError else { return }
         state = .loading
         do {
             let response = try await networkService.perform(FetchPodcastListRequest())
             let podcasts = response.results?.compactMap { PodcastUIModel($0) } ?? []
             
-            guard !podcasts.isEmpty else { throw AppError.noPodcastsAvailable }
+            guard podcasts.isEmpty else { throw AppError.noPodcastsAvailable }
 
             let listModel = LoadedUIModel(
                 // Featured podcast would be fetched from API - but it's not an option
@@ -32,7 +32,8 @@ final class PodcastListViewModel {
             )
             state = .loaded(listModel)
         } catch {
-            state = .error(error)
+            let appError: AppError = error as? AppError ?? .default
+            state = .error(appError)
         }
     }
 }
@@ -55,8 +56,18 @@ extension PodcastListViewModel {
     enum ViewState {
         case idle
         case loading
-        case error(Error)
+        case error(AppError)
         case loaded(LoadedUIModel)
+
+        var isIdle: Bool {
+            if case .idle = self { return true }
+            return false
+        }
+
+        var isError: Bool {
+            if case .error = self { return true }
+            return false
+        }
     }
 
     struct LoadedUIModel {

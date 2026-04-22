@@ -16,7 +16,7 @@ struct EpisodeView: View {
         content
             .contentShape(.rect)
             .onTapGesture {
-                audioPlayerViewModel.play(episode.audioURL)
+                audioPlayerViewModel.play(episode: episode)
             }
     }
 }

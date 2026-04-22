@@ -12,6 +12,12 @@ struct ContentView: View {
 
     var body: some View {
         PodcastListNavigationStack()
+            .safeAreaInset(edge: .bottom) {
+                if let episode = audioPlayerViewModel.currentlyPlayingEpisode {
+                    PlayingPodcastView(episode: episode)
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
+                }
+            }
             .environment(audioPlayerViewModel)
     }
 }

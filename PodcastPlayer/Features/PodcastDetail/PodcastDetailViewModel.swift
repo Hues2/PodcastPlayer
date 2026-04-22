@@ -11,15 +11,15 @@ import Factory
 
 @Observable
 final class PodcastDetailViewModel {
+    let podcast: PodcastUIModel
+    
     private(set) var episodeListState: EpisodeListState = .idle
 
     // Dependencies
     @ObservationIgnored @Injected(\.networkService) private var networkService
 
-    private let podcastId: Int
-
-    init(podcastId: Int) {
-        self.podcastId = podcastId
+    init(podcast: PodcastUIModel) {
+        self.podcast = podcast
     }
 
     func fetchEpisodes() async {
@@ -27,8 +27,13 @@ final class PodcastDetailViewModel {
         episodeListState = .loading
 
         do {
-            let response = try await networkService.perform(FetchEpisodesRequest(podcastId: podcastId))
-            let episodes = response.results?.compactMap { EpisodeUIModel($0) } ?? []
+            let response = try await networkService.perform(FetchEpisodesRequest(podcastId: podcast.id))
+            let episodes: [EpisodeUIModel] = response.results?.compactMap {
+                var episodeUIModel = EpisodeUIModel($0)
+                episodeUIModel?.podcastTitle = podcast.title
+                episodeUIModel?.podcastImageURL = podcast.imageURL
+                return episodeUIModel
+            } ?? []
 
             // TODO: No episodes available - not podcasts
             guard !episodes.isEmpty else { throw AppError.noPodcastsAvailable }

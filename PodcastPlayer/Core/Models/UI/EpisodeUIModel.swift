@@ -17,6 +17,8 @@ struct EpisodeUIModel: Identifiable, Hashable {
     let season: Int?
     let type: String?
     let audioURL: URL?
+    var podcastTitle: String? = nil
+    var podcastImageURL: URL? = nil
 }
 
 extension EpisodeUIModel {

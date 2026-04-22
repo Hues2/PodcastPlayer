@@ -9,14 +9,11 @@ import SwiftUI
 import Kingfisher
 
 struct PodcastDetailView: View {
-    let podcast: PodcastUIModel
-
     @Environment(\.dismiss) private var dismiss
     @State private var viewModel: PodcastDetailViewModel
 
     init(podcast: PodcastUIModel) {
-        self.podcast = podcast
-        self._viewModel = State(initialValue: PodcastDetailViewModel(podcastId: podcast.id))
+        self._viewModel = State(initialValue: PodcastDetailViewModel(podcast: podcast))
     }
 
     // Scroll State
@@ -45,7 +42,7 @@ private extension PodcastDetailView {
                     .offset(y: max(0, scrollOffset))
 
                 PodcastDetailContentView(
-                    podcast: podcast,
+                    podcast: viewModel.podcast,
                     isScrolled: isScrolled,
                     episodeListState: viewModel.episodeListState
                 )
@@ -89,7 +86,7 @@ private extension PodcastDetailView {
     }
 
     var image: some View {
-        KFImage(podcast.imageURL)
+        KFImage(viewModel.podcast.imageURL)
             .resizable()
             .scaledToFill()
             .frame(height: imageHeight)

@@ -9,9 +9,9 @@ import SwiftUI
 
 struct PodcastListLoadedView: View {
     let model: PodcastListViewModel.LoadedUIModel
-
+    
     @Environment(NavigationRouter<PodcastListScreen>.self) private var router
-
+    
     var body: some View {
         content
     }
@@ -26,17 +26,17 @@ private extension PodcastListLoadedView {
                     PodcastListHeaderView(podcast: featurePodcast)
                         .contentShape(.rect)
                         .onTapGesture {
-                            router.push(.podcastDetail(featurePodcast.id))
+                            router.push(.podcastDetail(featurePodcast))
                         }
                 }
-
+                
                 podcastList
             }
         }
         .scrollIndicators(.hidden)
         .ignoresSafeArea()
     }
-
+    
     var podcastList: some View {
         VStack(alignment: .leading, spacing: 48) {
             ForEach(model.podcastsByCategory.keys.sorted(), id: \.self) { categoryId in
@@ -46,7 +46,7 @@ private extension PodcastListLoadedView {
             }
         }
     }
-
+    
     func podcastSection(_ categoryId: Int, _ podcasts: [PodcastUIModel]) -> some View {
         VStack(alignment: .leading, spacing: 16) {
             Text("Category \(categoryId)")
@@ -54,14 +54,14 @@ private extension PodcastListLoadedView {
                 .fontWeight(.bold)
                 .foregroundStyle(.primary)
                 .padding(.horizontal, 12)
-
+            
             ScrollView(.horizontal) {
                 LazyHStack(spacing: 16) {
                     ForEach(podcasts) { podcast in
-                        PodcastView(podcast: podcast)
+                        PodcastCardView(podcast: podcast)
                             .contentShape(.rect)
                             .onTapGesture {
-                                router.push(.podcastDetail(podcast.id))
+                                router.push(.podcastDetail(podcast))
                             }
                     }
                 }

@@ -8,5 +8,5 @@
 import Foundation
 
 enum PodcastListScreen: Screen {
-    case podcastDetail(Int)
+    case podcastDetail(PodcastUIModel)
 }

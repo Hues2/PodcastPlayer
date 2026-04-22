@@ -15,8 +15,8 @@ struct PodcastListNavigationStack: View {
             PodcastListRootView()
                 .navigationDestination(for: PodcastListScreen.self) { screen in
                     switch screen {
-                    case .podcastDetail(let id):
-                        Text("Podcast Detail \(id)")
+                    case .podcastDetail(let podcast):
+                        PodcastDetailView(podcast: podcast)
                     }
                 }
         }

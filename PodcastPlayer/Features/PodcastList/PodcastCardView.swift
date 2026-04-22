@@ -8,7 +8,7 @@
 import SwiftUI
 import Kingfisher
 
-struct PodcastView: View {
+struct PodcastCardView: View {
     let podcast: PodcastUIModel
     
     private enum Layout {
@@ -21,7 +21,7 @@ struct PodcastView: View {
 }
 
 // MARK: - View Content
-private extension PodcastView {
+private extension PodcastCardView {
     var content: some View {
         VStack(alignment: .leading, spacing: 8) {
             imageView
@@ -71,6 +71,6 @@ private extension PodcastView {
         seasonal: false,
         type: "episodic"
     )
-    PodcastView(podcast: preview)
+    PodcastCardView(podcast: preview)
         .padding()
 }

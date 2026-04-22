@@ -11,6 +11,8 @@ import Kingfisher
 struct PlayingPodcastView: View {
     let episode: EpisodeUIModel
 
+    @Environment(AudioPlayerViewModel.self) private var audioPlayerViewModel
+
     private enum Layout {
         static let imageCornerRadius: CGFloat = 8
         static let imageSize: CGFloat = 64
@@ -18,7 +20,13 @@ struct PlayingPodcastView: View {
     }
 
     var body: some View {
-        HStack(alignment: .center, spacing: 8) {
+        content
+    }
+}
+
+private extension PlayingPodcastView {
+    var content: some View {
+        HStack(alignment: .center, spacing: 16) {
             HStack(spacing: 12) {
                 KFImage(episode.podcastImageURL)
                     .resizable()
@@ -41,10 +49,30 @@ struct PlayingPodcastView: View {
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
+
+            playPauseButton
         }
         .padding(Layout.padding)
         .background(.ultraThickMaterial)
+        .fixedSize(horizontal: false, vertical: true)
         .ignoresSafeArea()
+    }
+
+    var playPauseButton: some View {
+        Button {
+            audioPlayerViewModel.playPauseAction()
+        } label: {
+            Image(systemName: audioPlayerViewModel.isPlaying ? "pause.fill" : "play.fill")                
+                .contentTransition(.symbolEffect(.replace))
+                .font(.title3)
+                .foregroundStyle(.primary)
+                .contentShape(.rect)
+                .frame(maxHeight: .infinity)
+                .padding()
+                .background(.ultraThickMaterial)
+                .clipShape(.circle)
+        }
+        .buttonStyle(.plain)
     }
 }
 
@@ -63,5 +91,6 @@ struct PlayingPodcastView: View {
         podcastImageURL: URL(string: "https://the-podcasts.fly.dev/v1/images/c22c9113-a022-5940-bc79-bd4fea8b1c04")
     )
 
-    PlayingPodcastView(episode: episode)        
+    PlayingPodcastView(episode: episode)
+        .environment(AudioPlayerViewModel(currentlyPlayingEpisode: episode))
 }

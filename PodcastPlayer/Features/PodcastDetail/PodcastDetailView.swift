@@ -73,7 +73,7 @@ private extension PodcastDetailView {
             .frame(maxWidth: .infinity, alignment: .leading)
             .buttonStyle(.plain)
         }
-        .padding()
+        .padding(16)
         .background {
             if showNavigationBackground {
                 Color(.systemBackground)

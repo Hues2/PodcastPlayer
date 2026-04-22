@@ -9,11 +9,7 @@ public final class AudioPlayerServiceImpl: AudioPlayerService {
     // MARK: - Initialization
     public init() {}
 
-    // MARK: - AudioPlayerService
-    public var isPlaying: Bool {
-        player?.timeControlStatus == .playing
-    }
-
+    // MARK: - AudioPlayerService    
     public func startPlaying(url: URL) {
         activateSession()
 

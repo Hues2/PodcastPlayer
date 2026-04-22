@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E78A4E12F99433700B67832 /* PodcastPlayerAudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2E78A4E02F99433700B67832 /* PodcastPlayerAudioKit */; };
 		2E8BE0A02F97D986007FE4BF /* PodcastPlayerNetworkingKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2E8BE09F2F97D986007FE4BF /* PodcastPlayerNetworkingKit */; };
 		2E8BE0C22F97F2D2007FE4BF /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 2E8BE0C12F97F2D2007FE4BF /* Kingfisher */; };
 		2E8BE0C52F97F7F0007FE4BF /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = 2E8BE0C42F97F7F0007FE4BF /* Factory */; };
@@ -60,6 +61,7 @@
 			files = (
 				2E8BE0C52F97F7F0007FE4BF /* Factory in Frameworks */,
 				2E8BE0C22F97F2D2007FE4BF /* Kingfisher in Frameworks */,
+				2E78A4E12F99433700B67832 /* PodcastPlayerAudioKit in Frameworks */,
 				2E8BE0A02F97D986007FE4BF /* PodcastPlayerNetworkingKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -115,6 +117,7 @@
 				2E8BE09F2F97D986007FE4BF /* PodcastPlayerNetworkingKit */,
 				2E8BE0C12F97F2D2007FE4BF /* Kingfisher */,
 				2E8BE0C42F97F7F0007FE4BF /* Factory */,
+				2E78A4E02F99433700B67832 /* PodcastPlayerAudioKit */,
 			);
 			productName = PodcastPlayer;
 			productReference = 2E8BE0712F97D0F2007FE4BF /* PodcastPlayer.app */;
@@ -175,6 +178,7 @@
 				2E8BE09E2F97D986007FE4BF /* XCLocalSwiftPackageReference "LocalPackages/PodcastPlayerNetworkingKit" */,
 				2E8BE0C02F97F2D2007FE4BF /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				2E8BE0C32F97F7F0007FE4BF /* XCRemoteSwiftPackageReference "Factory" */,
+				2E78A4DF2F99433700B67832 /* XCLocalSwiftPackageReference "LocalPackages/PodcastPlayerAudioKit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 2E8BE0722F97D0F2007FE4BF /* Products */;
@@ -496,6 +500,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
+		2E78A4DF2F99433700B67832 /* XCLocalSwiftPackageReference "LocalPackages/PodcastPlayerAudioKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = LocalPackages/PodcastPlayerAudioKit;
+		};
 		2E8BE09E2F97D986007FE4BF /* XCLocalSwiftPackageReference "LocalPackages/PodcastPlayerNetworkingKit" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = LocalPackages/PodcastPlayerNetworkingKit;
@@ -522,6 +530,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		2E78A4E02F99433700B67832 /* PodcastPlayerAudioKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PodcastPlayerAudioKit;
+		};
 		2E8BE09F2F97D986007FE4BF /* PodcastPlayerNetworkingKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PodcastPlayerNetworkingKit;

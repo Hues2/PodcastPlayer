@@ -10,11 +10,11 @@ import Kingfisher
 
 struct PodcastView: View {
     let podcast: PodcastUIModel
-
+    
     private enum Layout {
-        static let width: CGFloat = 150
+        static let width: CGFloat = 164
     }
-
+    
     var body: some View {
         content
     }
@@ -29,7 +29,7 @@ private extension PodcastView {
         }
         .frame(width: Layout.width)
     }
-
+    
     var imageView: some View {
         KFImage(podcast.imageURL)
             .resizable()
@@ -37,21 +37,21 @@ private extension PodcastView {
             .frame(width: Layout.width, height: Layout.width)
             .clipShape(.rect(cornerRadius: 16))
     }
-
+    
     var infoView: some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(podcast.title)
-                .font(.headline)
+                .font(.subheadline)
                 .fontWeight(.semibold)
-                .lineLimit(2)
-
+            
             if let author = podcast.author {
                 Text(author)
-                    .font(.subheadline)
-                    .fontWeight(.light)
-                    .lineLimit(1)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fontWeight(.regular)
             }
         }
+        .lineLimit(1)
         .foregroundStyle(.primary)
     }
 }

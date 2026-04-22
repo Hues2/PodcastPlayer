@@ -26,13 +26,27 @@ final class PodcastListViewModel {
             guard !podcasts.isEmpty else { throw AppError.noPodcastsAvailable }
 
             let listModel = LoadedUIModel(
+                // Featured podcast would be fetched from API - but it's not an option
                 featured: podcasts.randomElement(),
-                podcasts: podcasts
+                podcastsByCategory: groupByCategory(podcasts)
             )
             state = .loaded(listModel)
         } catch {
             state = .error(error)
         }
+    }
+}
+
+// MARK: - Helpers
+private extension PodcastListViewModel {
+    func groupByCategory(_ podcasts: [PodcastUIModel]) -> [Int: [PodcastUIModel]] {
+        var categoryMap: [Int: [PodcastUIModel]] = [:]
+        for podcast in podcasts {
+            for categoryId in podcast.categoryIds ?? [] {
+                categoryMap[categoryId, default: []].append(podcast)
+            }
+        }
+        return categoryMap
     }
 }
 
@@ -47,7 +61,7 @@ extension PodcastListViewModel {
 
     struct LoadedUIModel {
         let featured: PodcastUIModel?
-        let podcasts: [PodcastUIModel]
+        let podcastsByCategory: [Int: [PodcastUIModel]]
     }
 }
 

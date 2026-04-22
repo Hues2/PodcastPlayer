@@ -6,12 +6,59 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct PodcastDetailView: View {
     let podcast: PodcastUIModel
 
+    // Scroll State
+    @State private var scrollOffset: CGFloat = 0
+    @State private var scrollPosition = ScrollPosition()
+    @State private var isScrolled: Bool = false
+
     var body: some View {
-        Text("Podcast Detail View")
+        content
+    }
+}
+
+private extension PodcastDetailView {
+    var content: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: .zero) {
+                image
+                    .offset(y: max(0, scrollOffset))
+
+                PodcastDetailContentView(podcast: podcast, isScrolled: isScrolled)
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .scrollPosition($scrollPosition)
+        .onScrollGeometryChange(for: CGFloat.self) { geometry in
+            max(0, geometry.contentOffset.y)
+        } action: { _, newValue in
+            onScroll(newValue)
+        }
+        .scrollIndicators(.hidden)
+        .ignoresSafeArea()
+    }
+
+    var image: some View {
+        KFImage(podcast.imageURL)
+            .resizable()
+            .scaledToFill()
+            .frame(height: 400)
+            .frame(maxWidth: .infinity)
+            .clipped()
+            .stretchy()
+    }
+}
+
+private extension PodcastDetailView {
+    func onScroll(_ scrollOffset: CGFloat) {
+        self.scrollOffset = scrollOffset
+        withAnimation(.snappy(duration: 0.3)) {
+            self.isScrolled = scrollOffset > .zero
+        }
     }
 }
 

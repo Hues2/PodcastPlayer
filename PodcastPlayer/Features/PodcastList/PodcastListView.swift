@@ -33,6 +33,7 @@ private extension PodcastListView {
                 }
 
                 podcastList
+                    .padding(.bottom, 24)
             }
         }
         .scrollIndicators(.hidden)

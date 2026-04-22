@@ -54,7 +54,7 @@ private extension PodcastListHeaderView {
                 Text(description)
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
-                    .lineLimit(2)
+                    .lineLimit(4)
                     .padding(.top, 4)
             }
         }

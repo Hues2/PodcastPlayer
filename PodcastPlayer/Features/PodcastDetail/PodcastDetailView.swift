@@ -11,20 +11,28 @@ import Kingfisher
 struct PodcastDetailView: View {
     let podcast: PodcastUIModel
 
+    @Environment(\.dismiss) private var dismiss
     @State private var viewModel: PodcastDetailViewModel
 
     init(podcast: PodcastUIModel) {
         self.podcast = podcast
         self._viewModel = State(initialValue: PodcastDetailViewModel(podcastId: podcast.id))
     }
-    
+
     // Scroll State
     @State private var scrollOffset: CGFloat = 0
     @State private var scrollPosition = ScrollPosition()
     @State private var isScrolled: Bool = false
+    @State private var showNavigationBackground: Bool = false
+
+    private let imageHeight: CGFloat = 400
 
     var body: some View {
         content
+            .overlay(alignment: .top) {
+                navigationBar
+            }
+            .toolbarVisibility(.hidden, for: .navigationBar)
             .task { await viewModel.fetchEpisodes() }
     }
 }
@@ -43,7 +51,6 @@ private extension PodcastDetailView {
                 )
             }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .scrollPosition($scrollPosition)
         .onScrollGeometryChange(for: CGFloat.self) { geometry in
             max(0, geometry.contentOffset.y)
@@ -54,11 +61,38 @@ private extension PodcastDetailView {
         .ignoresSafeArea()
     }
 
+    var navigationBar: some View {
+        HStack(alignment: .center, spacing: 8) {
+            Button {
+                dismiss()
+            } label: {
+                Image(systemName: "chevron.left")
+                    .foregroundStyle(.primary)
+                    .fontWeight(.semibold)
+                    .padding()
+                    .background(.thickMaterial)
+                    .clipShape(.circle)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .buttonStyle(.plain)
+        }
+        .padding()
+        .background {
+            if showNavigationBackground {
+                Color(.systemBackground)
+                    .ignoresSafeArea()
+                    .transition(.move(edge: .top).combined(with: .opacity))
+                    .ignoresSafeArea()
+                    .shadow(color: .black.opacity(0.2), radius: 2, x: 0, y: 2)
+            }
+        }
+    }
+
     var image: some View {
         KFImage(podcast.imageURL)
             .resizable()
             .scaledToFill()
-            .frame(height: 400)
+            .frame(height: imageHeight)
             .frame(maxWidth: .infinity)
             .clipped()
             .stretchy()
@@ -68,8 +102,10 @@ private extension PodcastDetailView {
 private extension PodcastDetailView {
     func onScroll(_ scrollOffset: CGFloat) {
         self.scrollOffset = scrollOffset
+
         withAnimation(.snappy(duration: 0.3)) {
             self.isScrolled = scrollOffset > .zero
+            self.showNavigationBackground = scrollOffset > imageHeight - 76
         }
     }
 }

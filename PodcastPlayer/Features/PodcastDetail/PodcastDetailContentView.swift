@@ -14,6 +14,7 @@ struct PodcastDetailContentView: View {
 
     var body: some View {
         content
+            .frame(maxWidth: .infinity)
             .background(.background)
             .clipShape(.rect(cornerRadii: .init(
                 topLeading: 16,

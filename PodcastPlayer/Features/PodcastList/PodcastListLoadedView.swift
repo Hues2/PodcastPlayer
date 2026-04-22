@@ -23,7 +23,12 @@ private extension PodcastListLoadedView {
         ScrollView {
             if let featurePodcast = model.featured {
                 PodcastListHeaderView(podcast: featurePodcast)
+                    .contentShape(.rect)
+                    .onTapGesture {
+                        router.push(.podcastDetail(featurePodcast.id))
+                    }
             }
+
             podcastList
         }
         .scrollIndicators(.hidden)

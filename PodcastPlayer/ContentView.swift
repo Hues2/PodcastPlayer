@@ -8,8 +8,11 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var audioPlayerViewModel = AudioPlayerViewModel()
+
     var body: some View {
         PodcastListNavigationStack()
+            .environment(audioPlayerViewModel)
     }
 }
 

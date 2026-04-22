@@ -10,8 +10,14 @@ import SwiftUI
 struct EpisodeView: View {
     let episode: EpisodeUIModel
 
+    @Environment(AudioPlayerViewModel.self) private var audioPlayerViewModel
+
     var body: some View {
         content
+            .contentShape(.rect)
+            .onTapGesture {
+                audioPlayerViewModel.play(episode.audioURL)
+            }
     }
 }
 

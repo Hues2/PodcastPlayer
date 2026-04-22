@@ -2,7 +2,7 @@ import AVFoundation
 import Foundation
 
 @MainActor
-public final class AVAudioPlayerService: AudioPlayerService, @unchecked Sendable {
+public final class AudioPlayerServiceImpl: AudioPlayerService, @unchecked Sendable {
     // MARK: - Properties
     private var player: AVPlayer?
     private var playerItem: AVPlayerItem?

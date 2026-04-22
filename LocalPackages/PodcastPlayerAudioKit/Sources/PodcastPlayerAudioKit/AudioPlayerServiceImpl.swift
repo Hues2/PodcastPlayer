@@ -10,18 +10,22 @@ public final class AudioPlayerServiceImpl: AudioPlayerService {
     public init() {}
 
     // MARK: - AudioPlayerService
+    public var isPlaying: Bool {
+        player?.timeControlStatus == .playing
+    }
+
     public func startPlaying(url: URL) {
         activateSession()
 
         let playerItem: AVPlayerItem = AVPlayerItem(url: url)
 
-        if let player = player {
+        if let player {
             player.replaceCurrentItem(with: playerItem)
         } else {
             player = AVPlayer(playerItem: playerItem)
         }
 
-        if let player = player {
+        if let player {
             player.play()
         }
     }
@@ -35,11 +39,7 @@ public final class AudioPlayerServiceImpl: AudioPlayerService {
     }
 
     public func getPlaybackDuration() -> Double {
-        guard let player = player else {
-            return 0
-        }
-
-        return player.currentItem?.duration.seconds ?? 0
+        player?.currentItem?.duration.seconds ?? 0
     }
 }
 

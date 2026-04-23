@@ -8,7 +8,7 @@
 import SwiftUI
 import Kingfisher
 
-struct PlayingPodcastView: View {
+struct NowPlayingCompactView: View {
     let episode: EpisodeUIModel
 
     @Environment(AudioPlayerViewModel.self) private var audioPlayerViewModel
@@ -21,36 +21,16 @@ struct PlayingPodcastView: View {
 
     var body: some View {
         content
+            .compositingGroup()
+            .shadow(color: .black.opacity(0.2), radius: 2, x: 0, y: -2)
     }
 }
 
-private extension PlayingPodcastView {
+private extension NowPlayingCompactView {
     var content: some View {
         HStack(alignment: .center, spacing: 12) {
-            HStack(spacing: 12) {
-                KFImage(episode.podcastImageURL)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: Layout.imageSize, height: Layout.imageSize)
-                    .clipShape(RoundedRectangle(cornerRadius: Layout.imageCornerRadius))
-
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(episode.title)
-                        .font(.subheadline)
-                        .fontWeight(.semibold)
-                        .lineLimit(2)
-                        .frame(maxHeight: .infinity, alignment: .top)
-
-                    if let podcastTitle = episode.podcastTitle {
-                        Text(podcastTitle)
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                            .lineLimit(1)
-                    }
-                }
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-
+            infoView
+                .frame(maxWidth: .infinity, alignment: .leading)
 
             playPauseButton
         }
@@ -58,6 +38,30 @@ private extension PlayingPodcastView {
         .background(.ultraThickMaterial)
         .fixedSize(horizontal: false, vertical: true)
         .ignoresSafeArea()
+    }
+
+    var infoView: some View {
+        HStack(spacing: 12) {
+            KFImage(episode.podcastImageURL)
+                .resizable()
+                .scaledToFill()
+                .frame(width: Layout.imageSize, height: Layout.imageSize)
+                .clipShape(RoundedRectangle(cornerRadius: Layout.imageCornerRadius))
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text(episode.title)
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                    .lineLimit(2)
+
+                if let podcastTitle = episode.podcastTitle {
+                    Text(podcastTitle)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .lineLimit(1)
+                }
+            }
+        }
     }
 
     var playPauseButton: some View {
@@ -100,6 +104,6 @@ private extension PlayingPodcastView {
         podcastImageURL: URL(string: "https://the-podcasts.fly.dev/v1/images/c22c9113-a022-5940-bc79-bd4fea8b1c04")
     )
 
-    PlayingPodcastView(episode: episode)
+    NowPlayingCompactView(episode: episode)
         .environment(AudioPlayerViewModel(currentlyPlayingEpisode: episode))
 }

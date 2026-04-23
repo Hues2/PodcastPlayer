@@ -14,7 +14,7 @@ struct ContentView: View {
         PodcastListNavigationStack()
             .safeAreaInset(edge: .bottom) {
                 if let episode = audioPlayerViewModel.currentlyPlayingEpisode {
-                    PlayingPodcastView(episode: episode)
+                    NowPlayingView(episode: episode)
                         .transition(.move(edge: .bottom).combined(with: .opacity))
                 }
             }

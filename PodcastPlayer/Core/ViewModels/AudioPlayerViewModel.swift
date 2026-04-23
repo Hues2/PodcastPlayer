@@ -16,6 +16,7 @@ final class AudioPlayerViewModel {
 
     var isPlaying: Bool { playbackState == .playing }
     var isLoading: Bool { playbackState == .loading || playbackState == .idle }
+    private let skipSeconds: Double = 15
 
     @ObservationIgnored @Injected(\.audioPlayerService) private var audioPlayerService
 
@@ -55,5 +56,15 @@ extension AudioPlayerViewModel {
         } else {
             audioPlayerService.resume()
         }
+    }
+
+    func skipBackward() {
+        guard currentlyPlayingEpisode != nil, !isLoading else { return }
+        self.audioPlayerService.skipBackward(seconds: skipSeconds)
+    }
+
+    func skipForward() {
+        guard currentlyPlayingEpisode != nil, !isLoading else { return }
+        self.audioPlayerService.skipForward(seconds: skipSeconds)
     }
 }

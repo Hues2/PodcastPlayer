@@ -6,4 +6,6 @@ public protocol AudioPlayerService {
     func pause()
     func resume()
     func getPlaybackDuration() -> Double
+    func skipForward(seconds: Double)
+    func skipBackward(seconds: Double)
 }

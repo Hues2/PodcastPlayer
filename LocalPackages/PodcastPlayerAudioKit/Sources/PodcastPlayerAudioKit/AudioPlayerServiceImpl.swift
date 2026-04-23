@@ -46,9 +46,26 @@ public final class AudioPlayerServiceImpl: AudioPlayerService {
     public func getPlaybackDuration() -> Double {
         player?.currentItem?.duration.seconds ?? 0
     }
+
+    public func skipForward(seconds: Double) {
+        skip(by: seconds)
+    }
+
+    public func skipBackward(seconds: Double) {
+        skip(by: -seconds)
+    }
 }
 
 private extension AudioPlayerServiceImpl {
+    func skip(by seconds: Double) {
+        guard let player, let currentItem = player.currentItem else { return }
+        let currentTime = player.currentTime()
+        let duration = currentItem.duration
+        let newTime = CMTimeAdd(currentTime, CMTimeMakeWithSeconds(seconds, preferredTimescale: currentTime.timescale))
+        let clampedTime = CMTimeClampToRange(newTime, range: CMTimeRange(start: .zero, end: duration))
+        player.seek(to: clampedTime)
+    }
+
     func observeTimeControlStatus(of player: AVPlayer) {
         timeControlStatusObservation = player.observe(\.timeControlStatus) { [weak self] player, _ in
             let state: PlaybackState = switch player.timeControlStatus {

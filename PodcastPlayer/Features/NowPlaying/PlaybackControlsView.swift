@@ -36,9 +36,15 @@ private extension PlaybackControlsView {
 private extension PlaybackControlsView {
     var playbackButtons: some View {
         HStack(alignment: .center, spacing: 24) {
-            skipButton(iconName: "arrow.counterclockwise", action: { })
+            skipButton(
+                iconName: "arrow.counterclockwise",
+                action: audioPlayerViewModel.skipBackward
+            )
             PlayPauseButton()
-            skipButton(iconName: "arrow.clockwise", action: { })
+            skipButton(
+                iconName: "arrow.clockwise",
+                action: audioPlayerViewModel.skipForward
+            )
         }
     }
 
@@ -49,6 +55,7 @@ private extension PlaybackControlsView {
             Image(systemName: iconName)
                 .font(.title3)
                 .foregroundStyle(.primary)
+                .padding(12)
                 .background(.ultraThickMaterial)
                 .clipShape(.circle)
         }

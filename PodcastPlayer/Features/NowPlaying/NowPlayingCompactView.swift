@@ -84,11 +84,11 @@ private extension NowPlayingCompactView {
             .contentTransition(.symbolEffect(.replace))
             .font(.title3)
             .foregroundStyle(.primary)
-            .contentShape(.rect)
             .frame(maxHeight: .infinity)
             .frame(width: 40)
             .background(.ultraThickMaterial)
             .clipShape(.circle)
+            .contentShape(.circle)
         }
         .buttonStyle(.plain)
     }
@@ -106,7 +106,7 @@ private extension NowPlayingCompactView {
         type: "full",
         audioURL: nil,
         podcastTitle: "The Rest Is History",
-        podcastImageURL: URL(string: "https://the-podcasts.fly.dev/v1/images/c22c9113-a022-5940-bc79-bd4fea8b1c04")
+        podcastImageURL: URL(string: "https://the-podcasts.fly.dev/v1/images/dd556fcd-1330-5c13-b86e-5a02b858bdba")
     )
     
     NowPlayingCompactView(episode: episode) { _ in }

@@ -32,22 +32,16 @@ struct NowPlayingExpandedView: View {
 // MARK: - View Content
 private extension NowPlayingExpandedView {
     var content: some View {
-        VStack(alignment: .center, spacing: 24) {
+        VStack(alignment: .center, spacing: 32) {
             navigationbar
                 .padding(.horizontal, -Layout.screenPadding + 8)
-            
-            image
+
+            VStack(alignment: .center, spacing: 24) {
+                image
+                PlaybackControlsView()
+            }
         }
         .padding(Layout.screenPadding)
-    }
-
-    var image: some View {
-        KFImage(episode.podcastImageURL)
-            .resizable()
-            .scaledToFill()
-            .frame(height: Layout.imageHeight)
-            .frame(maxWidth: .infinity)
-            .clipShape(.rect(cornerRadius: Layout.imageCornerRadius))
     }
 }
 
@@ -77,6 +71,18 @@ private extension NowPlayingExpandedView {
     }
 }
 
+// MARK: - Image View
+private extension NowPlayingExpandedView {
+    var image: some View {
+        KFImage(episode.podcastImageURL)
+            .resizable()
+            .scaledToFill()
+            .frame(height: Layout.imageHeight)
+            .frame(maxWidth: .infinity)
+            .clipShape(.rect(cornerRadius: Layout.imageCornerRadius))
+    }
+}
+
 #Preview {
     let episode = EpisodeUIModel(
         id: 1,
@@ -89,7 +95,7 @@ private extension NowPlayingExpandedView {
         type: "full",
         audioURL: nil,
         podcastTitle: "The Rest Is History",
-        podcastImageURL: URL(string: "https://the-podcasts.fly.dev/v1/images/c22c9113-a022-5940-bc79-bd4fea8b1c04")
+        podcastImageURL: URL(string: "https://the-podcasts.fly.dev/v1/images/dd556fcd-1330-5c13-b86e-5a02b858bdba")
     )
 
     NowPlayingExpandedView(episode: episode) { _ in }

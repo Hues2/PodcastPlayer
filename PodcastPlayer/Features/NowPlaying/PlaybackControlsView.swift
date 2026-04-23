@@ -15,15 +15,25 @@ struct PlaybackControlsView: View {
     }
 }
 
+// MARK: - View Content
 private extension PlaybackControlsView {
     var content: some View {
-        VStack(alignment: .center, spacing: 24) {
-            // TODO: Add seek bar
-
+        VStack(alignment: .center, spacing: 24) {            
+            seekBar
             playbackButtons
         }
     }
+}
 
+// MARK: - Seek Bar
+private extension PlaybackControlsView {
+    var seekBar: some View {
+        Text("")
+    }
+}
+
+// MARK: - Buttons
+private extension PlaybackControlsView {
     var playbackButtons: some View {
         HStack(alignment: .center, spacing: 24) {
             skipButton(iconName: "arrow.counterclockwise", action: { })
@@ -36,7 +46,7 @@ private extension PlaybackControlsView {
         Button {
             action()
         } label: {
-            Image(systemName: iconName)                
+            Image(systemName: iconName)
                 .font(.title3)
                 .foregroundStyle(.primary)
                 .background(.ultraThickMaterial)
@@ -61,7 +71,7 @@ private extension PlaybackControlsView {
         podcastTitle: "The Rest Is History",
         podcastImageURL: URL(string: "https://the-podcasts.fly.dev/v1/images/dd556fcd-1330-5c13-b86e-5a02b858bdba")
     )
-    
+
     PlaybackControlsView()
         .environment(AudioPlayerViewModel(currentlyPlayingEpisode: episode))
 }

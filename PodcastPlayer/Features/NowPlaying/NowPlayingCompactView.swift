@@ -35,7 +35,7 @@ private extension NowPlayingCompactView {
                 .contentShape(.rect)
                 .onTapGesture { setIsExpanded(true) }
 
-            PlayPauseButton(font: .title3)
+            PlayPauseButton(style: .compact)
         }
         .padding(Layout.padding)
         .background(.background)

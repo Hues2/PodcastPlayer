@@ -8,9 +8,28 @@
 import SwiftUI
 
 struct PlayPauseButton: View {
-    var font: Font = .title    
+    var style: Style = .expanded
 
     @Environment(AudioPlayerViewModel.self) private var audioPlayerViewModel
+
+    enum Style {
+        case expanded
+        case compact
+
+        var font: Font {
+            switch self {
+            case .expanded: .title
+            case .compact: .title3
+            }
+        }
+
+        var size: CGFloat {
+            switch self {
+            case .expanded: 60
+            case .compact: 40
+            }
+        }
+    }
 
     var body: some View {
         Button {
@@ -25,9 +44,9 @@ struct PlayPauseButton: View {
                 }
             }
             .contentTransition(.symbolEffect(.replace))
-            .font(font)
+            .font(style.font)
             .foregroundStyle(.primary)
-            .padding()
+            .frame(width: style.size, height: style.size)
             .background(.ultraThickMaterial)
             .clipShape(.circle)
         }
@@ -35,6 +54,40 @@ struct PlayPauseButton: View {
     }
 }
 
-#Preview {
-    PlayPauseButton()
+#Preview("Expanded") {
+    let episode = EpisodeUIModel(
+        id: 1,
+        title: "The Fall of the Roman Empire",
+        description: "A deep dive into the fall of Rome.",
+        duration: 3600,
+        published: Date(),
+        episode: 1,
+        season: 1,
+        type: "full",
+        audioURL: nil,
+        podcastTitle: "The Rest Is History",
+        podcastImageURL: URL(string: "https://the-podcasts.fly.dev/v1/images/dd556fcd-1330-5c13-b86e-5a02b858bdba")
+    )
+
+    NowPlayingExpandedView(episode: episode) { _ in }
+        .environment(AudioPlayerViewModel(currentlyPlayingEpisode: episode))
+}
+
+#Preview("Compact") {
+    let episode = EpisodeUIModel(
+        id: 1,
+        title: "The Fall of the Roman Empire",
+        description: "A deep dive into the fall of Rome.",
+        duration: 3600,
+        published: Date(),
+        episode: 1,
+        season: 1,
+        type: "full",
+        audioURL: nil,
+        podcastTitle: "The Rest Is History",
+        podcastImageURL: URL(string: "https://the-podcasts.fly.dev/v1/images/dd556fcd-1330-5c13-b86e-5a02b858bdba")
+    )
+
+    NowPlayingCompactView(episode: episode) { _ in }
+        .environment(AudioPlayerViewModel(currentlyPlayingEpisode: episode))
 }

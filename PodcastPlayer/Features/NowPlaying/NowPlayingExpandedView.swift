@@ -36,9 +36,11 @@ private extension NowPlayingExpandedView {
             navigationbar
                 .padding(.horizontal, -Layout.screenPadding + 8)
 
-            VStack(alignment: .center, spacing: 24) {
+            VStack(alignment: .center, spacing: 16) {
                 image
+                infoView
                 PlaybackControlsView()
+                    .padding(.top, 8)
             }
         }
         .padding(Layout.screenPadding)
@@ -83,10 +85,30 @@ private extension NowPlayingExpandedView {
     }
 }
 
+// MARK: - Info View
+private extension NowPlayingExpandedView {
+    var infoView: some View {
+        VStack(alignment: .center, spacing: 8) {
+            Text(episode.title)
+                .font(.title3)
+                .foregroundStyle(.primary)
+                .fontWeight(.semibold)
+
+            if let podcastTitle = episode.podcastTitle {
+                Text(podcastTitle)
+                    .font(.callout)
+                    .foregroundStyle(.secondary)
+                    .fontWeight(.regular)
+            }
+        }
+        .lineLimit(1)
+    }
+}
+
 #Preview {
     let episode = EpisodeUIModel(
         id: 1,
-        title: "The Fall of the Roman Empire",
+        title: "The Fall of the Roman Empire some really long text to test long titles",
         description: "A deep dive into the fall of Rome.",
         duration: 3600,
         published: Date(),
@@ -100,4 +122,5 @@ private extension NowPlayingExpandedView {
 
     NowPlayingExpandedView(episode: episode) { _ in }
         .environment(AudioPlayerViewModel(currentlyPlayingEpisode: episode))
+        .ignoresSafeArea()
 }

@@ -6,15 +6,22 @@ public final class AudioPlayerServiceImpl: AudioPlayerService {
     private var player: AVPlayer?
     private var session = AVAudioSession.sharedInstance()
     private var timeControlStatusObservation: NSKeyValueObservation?
+    private var timeObserver: Any?
     private var playbackStateContinuation: AsyncStream<PlaybackState>.Continuation?
+    private var playbackTimeContinuation: AsyncStream<PlaybackTime>.Continuation?
 
     public let playbackStateStream: AsyncStream<PlaybackState>
+    public let playbackTimeStream: AsyncStream<PlaybackTime>
 
     // MARK: - Initialization
     public init() {
-        var continuation: AsyncStream<PlaybackState>.Continuation!
-        playbackStateStream = AsyncStream { continuation = $0 }
-        playbackStateContinuation = continuation
+        var stateContinuation: AsyncStream<PlaybackState>.Continuation!
+        playbackStateStream = AsyncStream { stateContinuation = $0 }
+        playbackStateContinuation = stateContinuation
+
+        var timeContinuation: AsyncStream<PlaybackTime>.Continuation!
+        playbackTimeStream = AsyncStream { timeContinuation = $0 }
+        playbackTimeContinuation = timeContinuation
     }
 
     // MARK: - AudioPlayerService
@@ -31,6 +38,7 @@ public final class AudioPlayerServiceImpl: AudioPlayerService {
 
         if let player {
             observeTimeControlStatus(of: player)
+            addPeriodicTimeObserver(to: player)
             player.play()
         }
     }
@@ -43,8 +51,10 @@ public final class AudioPlayerServiceImpl: AudioPlayerService {
         player?.play()
     }
 
-    public func getPlaybackDuration() -> Double {
-        player?.currentItem?.duration.seconds ?? 0
+    public func seekTo(seconds: Double) {
+        guard let player else { return }
+        let time = CMTimeMakeWithSeconds(seconds, preferredTimescale: 600)
+        player.seek(to: time)
     }
 
     public func skipForward(seconds: Double) {
@@ -64,6 +74,19 @@ private extension AudioPlayerServiceImpl {
         let newTime = CMTimeAdd(currentTime, CMTimeMakeWithSeconds(seconds, preferredTimescale: currentTime.timescale))
         let clampedTime = CMTimeClampToRange(newTime, range: CMTimeRange(start: .zero, end: duration))
         player.seek(to: clampedTime)
+    }
+
+    func addPeriodicTimeObserver(to player: AVPlayer) {
+        if let timeObserver {
+            player.removeTimeObserver(timeObserver)
+        }
+        let interval = CMTimeMakeWithSeconds(0.5, preferredTimescale: 600)
+        timeObserver = player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { [weak self] time in
+            let currentTime = time.seconds
+            let duration = player.currentItem?.duration.seconds ?? 0
+            guard currentTime.isFinite, duration.isFinite else { return }
+            self?.playbackTimeContinuation?.yield(PlaybackTime(currentTime: currentTime, duration: duration))
+        }
     }
 
     func observeTimeControlStatus(of player: AVPlayer) {

@@ -2,10 +2,11 @@ import Foundation
 
 public protocol AudioPlayerService {
     var playbackStateStream: AsyncStream<PlaybackState> { get }
+    var playbackTimeStream: AsyncStream<PlaybackTime> { get }
     func startPlaying(url: URL)
     func pause()
     func resume()
-    func getPlaybackDuration() -> Double
+    func seekTo(seconds: Double)
     func skipForward(seconds: Double)
     func skipBackward(seconds: Double)
 }

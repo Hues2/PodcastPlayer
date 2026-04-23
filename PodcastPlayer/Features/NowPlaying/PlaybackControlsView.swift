@@ -45,8 +45,10 @@ private extension PlaybackControlsView {
                 scrubValue = audioPlayerViewModel.currentTime
                 isScrubbing = true
             } else {
-                audioPlayerViewModel.seekTo(seconds: scrubValue)
-                isScrubbing = false
+                Task {
+                    await audioPlayerViewModel.seekTo(seconds: scrubValue)
+                    isScrubbing = false
+                }
             }
         }
         .tint(.primary)

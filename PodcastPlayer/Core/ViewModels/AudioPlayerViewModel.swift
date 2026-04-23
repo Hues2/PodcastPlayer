@@ -72,9 +72,10 @@ extension AudioPlayerViewModel {
         }
     }
 
-    func seekTo(seconds: Double) {
+    func seekTo(seconds: Double) async {
         guard currentlyPlayingEpisode != nil, !isLoading else { return }
-        audioPlayerService.seekTo(seconds: seconds)
+        currentTime = seconds
+        await audioPlayerService.seekTo(seconds: seconds)
     }
 
     func skipBackward() {

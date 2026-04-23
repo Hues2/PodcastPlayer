@@ -1,10 +1,12 @@
 import AVFoundation
 import Foundation
+import os
 
 public final class AudioPlayerServiceImpl: AudioPlayerService {
     // MARK: - Properties
     private var player: AVPlayer?
     private var session = AVAudioSession.sharedInstance()
+    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "AudioPlayerService", category: "AudioPlayerService")
     private var timeControlStatusObservation: NSKeyValueObservation?
     private var timeObserver: Any?
     private var playbackStateContinuation: AsyncStream<PlaybackState>.Continuation?
@@ -51,10 +53,10 @@ public final class AudioPlayerServiceImpl: AudioPlayerService {
         player?.play()
     }
 
-    public func seekTo(seconds: Double) {
+    public func seekTo(seconds: Double) async {
         guard let player else { return }
         let time = CMTimeMakeWithSeconds(seconds, preferredTimescale: 600)
-        player.seek(to: time)
+        await player.seek(to: time)
     }
 
     public func skipForward(seconds: Double) {
@@ -108,22 +110,28 @@ private extension AudioPlayerServiceImpl {
                 mode: .default,
                 options: []
             )
-        } catch _ {}
+        } catch {
+            logger.debug("Failed to set audio session category: \(error.localizedDescription, privacy: .public)")
+        }
 
         do {
             try session.setActive(true, options: .notifyOthersOnDeactivation)
-        } catch _ {}
+        } catch {
+            logger.debug("Failed to activate audio session: \(error.localizedDescription, privacy: .public)")
+        }
 
         do {
             try session.overrideOutputAudioPort(.speaker)
-        } catch _ {}
+        } catch {
+            logger.debug("Failed to override output audio port: \(error.localizedDescription, privacy: .public)")
+        }
     }
 
     func deactivateSession() {
         do {
             try session.setActive(false, options: .notifyOthersOnDeactivation)
-        } catch let error as NSError {
-            print("Failed to deactivate audio session: \(error.localizedDescription)")
+        } catch {
+            logger.debug("Failed to deactivate audio session: \(error.localizedDescription, privacy: .public)")
         }
     }
 }

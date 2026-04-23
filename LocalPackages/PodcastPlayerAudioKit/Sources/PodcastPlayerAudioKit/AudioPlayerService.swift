@@ -6,7 +6,7 @@ public protocol AudioPlayerService {
     func startPlaying(url: URL)
     func pause()
     func resume()
-    func seekTo(seconds: Double)
+    func seekTo(seconds: Double) async
     func skipForward(seconds: Double)
     func skipBackward(seconds: Double)
 }

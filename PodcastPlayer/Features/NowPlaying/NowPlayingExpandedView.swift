@@ -6,14 +6,70 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct NowPlayingExpandedView: View {
     let episode: EpisodeUIModel
+    let setIsExpanded: (Bool) -> Void
 
     @Environment(AudioPlayerViewModel.self) private var audioPlayerViewModel
 
+    private enum Layout {
+        static let imageCornerRadius: CGFloat = 16
+        static let imageHeight: CGFloat = 350
+        static let screenPadding: CGFloat = 24
+    }
+
     var body: some View {
-        Text("Now Playing Expanded View")
+        content
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            .background(.ultraThickMaterial)
+    }
+}
+
+// MARK: - View Content
+private extension NowPlayingExpandedView {
+    var content: some View {
+        VStack(alignment: .center, spacing: 24) {
+            navigationbar
+            image
+        }
+        .padding(Layout.screenPadding)
+    }
+
+    var image: some View {
+        KFImage(episode.podcastImageURL)
+            .resizable()
+            .scaledToFill()
+            .frame(height: Layout.imageHeight)
+            .frame(maxWidth: .infinity)
+            .clipShape(.rect(cornerRadius: Layout.imageCornerRadius))
+    }
+}
+
+// MARK: - Navigation Bar
+private extension NowPlayingExpandedView {
+    var navigationbar: some View {
+        HStack(alignment: .center, spacing: .zero) {
+            collapseButton
+                .frame(maxWidth: .infinity, alignment: .leading)
+        }
+    }
+
+    var collapseButton: some View {
+        Button {
+            setIsExpanded(false)
+        } label: {
+            Image(systemName: "chevron.down")
+                .font(.title2)
+                .fontWeight(.semibold)
+                .foregroundStyle(.primary)
+                .padding()
+                .background(.thinMaterial)
+                .clipShape(.circle)
+                .contentShape(.circle)
+        }
+        .buttonStyle(.plain)
     }
 }
 
@@ -32,6 +88,6 @@ struct NowPlayingExpandedView: View {
         podcastImageURL: URL(string: "https://the-podcasts.fly.dev/v1/images/c22c9113-a022-5940-bc79-bd4fea8b1c04")
     )
 
-    NowPlayingExpandedView(episode: episode)
+    NowPlayingExpandedView(episode: episode) { _ in }
         .environment(AudioPlayerViewModel(currentlyPlayingEpisode: episode))
 }

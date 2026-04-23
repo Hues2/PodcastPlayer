@@ -21,9 +21,15 @@ private extension NowPlayingView {
     @ViewBuilder
     var content: some View {
         if isExpanded {
-            NowPlayingExpandedView(episode: episode)
+            NowPlayingExpandedView(episode: episode, setIsExpanded: setIsExpanded)
         } else {
-            NowPlayingCompactView(episode: episode)
+            NowPlayingCompactView(episode: episode, setIsExpanded: setIsExpanded)
+        }
+    }
+
+    func setIsExpanded(_ isExpanded: Bool) {
+        withAnimation(.snappy(duration: 0.3, extraBounce: 0.05)) {
+            self.isExpanded = isExpanded
         }
     }
 }

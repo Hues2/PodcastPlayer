@@ -10,15 +10,16 @@ import Kingfisher
 
 struct NowPlayingCompactView: View {
     let episode: EpisodeUIModel
-
+    let setIsExpanded: (Bool) -> Void
+    
     @Environment(AudioPlayerViewModel.self) private var audioPlayerViewModel
-
+    
     private enum Layout {
         static let imageCornerRadius: CGFloat = 8
         static let imageSize: CGFloat = 64
-        static let padding: CGFloat = 16
+        static let padding: CGFloat = 24
     }
-
+    
     var body: some View {
         content
             .compositingGroup()
@@ -31,7 +32,11 @@ private extension NowPlayingCompactView {
         HStack(alignment: .center, spacing: 12) {
             infoView
                 .frame(maxWidth: .infinity, alignment: .leading)
-
+                .contentShape(.rect)
+                .onTapGesture {
+                    setIsExpanded(true)
+                }
+            
             playPauseButton
         }
         .padding(Layout.padding)
@@ -39,7 +44,7 @@ private extension NowPlayingCompactView {
         .fixedSize(horizontal: false, vertical: true)
         .ignoresSafeArea()
     }
-
+    
     var infoView: some View {
         HStack(spacing: 12) {
             KFImage(episode.podcastImageURL)
@@ -47,13 +52,13 @@ private extension NowPlayingCompactView {
                 .scaledToFill()
                 .frame(width: Layout.imageSize, height: Layout.imageSize)
                 .clipShape(RoundedRectangle(cornerRadius: Layout.imageCornerRadius))
-
+            
             VStack(alignment: .leading, spacing: 2) {
                 Text(episode.title)
                     .font(.subheadline)
                     .fontWeight(.semibold)
                     .lineLimit(2)
-
+                
                 if let podcastTitle = episode.podcastTitle {
                     Text(podcastTitle)
                         .font(.caption)
@@ -63,7 +68,7 @@ private extension NowPlayingCompactView {
             }
         }
     }
-
+    
     var playPauseButton: some View {
         Button {
             guard !audioPlayerViewModel.isLoading else { return }
@@ -103,7 +108,7 @@ private extension NowPlayingCompactView {
         podcastTitle: "The Rest Is History",
         podcastImageURL: URL(string: "https://the-podcasts.fly.dev/v1/images/c22c9113-a022-5940-bc79-bd4fea8b1c04")
     )
-
-    NowPlayingCompactView(episode: episode)
+    
+    NowPlayingCompactView(episode: episode) { _ in }
         .environment(AudioPlayerViewModel(currentlyPlayingEpisode: episode))
 }

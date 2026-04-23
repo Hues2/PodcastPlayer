@@ -26,7 +26,7 @@ struct PlayPauseButton: View {
         var size: CGFloat {
             switch self {
             case .expanded: 64
-            case .compact: 40
+            case .compact: 44
             }
         }
     }

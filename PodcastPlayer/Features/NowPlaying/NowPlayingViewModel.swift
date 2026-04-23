@@ -13,8 +13,8 @@ import PodcastPlayerAudioKit
 final class NowPlayingViewModel {
     private(set) var currentlyPlayingEpisode: EpisodeUIModel?
     private(set) var playbackState: PlaybackState = .idle
-    private(set) var currentTime: Double = 0
-    private(set) var duration: Double = 0
+    private(set) var currentTime: Double = .zero
+    private(set) var duration: Double = .zero
 
     var isPlaying: Bool { playbackState == .playing }
     var isLoading: Bool { playbackState == .loading || playbackState == .idle }
@@ -56,6 +56,8 @@ final class NowPlayingViewModel {
 // MARK: - Service Playback Methods
 extension NowPlayingViewModel {
     func startPlaying(episode: EpisodeUIModel) {
+        self.resetPlayback()
+
         // TODO: Handle invalid url
         guard let url = episode.audioURL else { return }
 
@@ -88,6 +90,13 @@ extension NowPlayingViewModel {
     func skipForward() {
         guard currentlyPlayingEpisode != nil, !isLoading else { return }
         self.audioPlayerService.skipForward(seconds: skipSeconds)
+    }
+
+    private func resetPlayback() {
+        self.playbackState = .idle
+        self.currentTime = .zero
+        self.duration = .zero
+        self.isNowPlayingExpanded = false
     }
 }
 

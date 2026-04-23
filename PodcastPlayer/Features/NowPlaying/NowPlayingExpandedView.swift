@@ -23,7 +23,7 @@ struct NowPlayingExpandedView: View {
     var body: some View {
         content
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-            .background(.ultraThickMaterial)
+            .background(.background)
     }
 }
 
@@ -32,6 +32,8 @@ private extension NowPlayingExpandedView {
     var content: some View {
         VStack(alignment: .center, spacing: 24) {
             navigationbar
+                .padding(.horizontal, -Layout.screenPadding + 8)
+            
             image
         }
         .padding(Layout.screenPadding)
@@ -61,11 +63,11 @@ private extension NowPlayingExpandedView {
             setIsExpanded(false)
         } label: {
             Image(systemName: "chevron.down")
-                .font(.title2)
-                .fontWeight(.semibold)
+                .font(.title3)
+                .fontWeight(.regular)
                 .foregroundStyle(.primary)
                 .padding()
-                .background(.thinMaterial)
+                .background(.ultraThickMaterial)
                 .clipShape(.circle)
                 .contentShape(.circle)
         }

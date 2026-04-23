@@ -40,7 +40,7 @@ private extension NowPlayingCompactView {
             playPauseButton
         }
         .padding(Layout.padding)
-        .background(.ultraThickMaterial)
+        .background(.background)
         .fixedSize(horizontal: false, vertical: true)
         .ignoresSafeArea()
     }

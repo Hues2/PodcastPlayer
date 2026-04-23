@@ -9,8 +9,9 @@ import SwiftUI
 import Kingfisher
 
 struct PodcastDetailView: View {
-    @Environment(\.dismiss) private var dismiss
     @State private var viewModel: PodcastDetailViewModel
+    @Environment(\.dismiss) private var dismiss
+    @Environment(NowPlayingViewModel.self) private var nowPlayingViewModel
 
     init(podcast: PodcastUIModel) {
         self._viewModel = State(initialValue: PodcastDetailViewModel(podcast: podcast))
@@ -55,7 +56,13 @@ private extension PodcastDetailView {
             onScroll(newValue)
         }
         .scrollIndicators(.hidden)
-        .ignoresSafeArea()
+        .safeAreaInset(edge: .bottom) {
+            if let episode = nowPlayingViewModel.currentlyPlayingEpisode {
+                NowPlayingCompactView(episode: episode)
+                    .transition(.move(edge: .bottom))
+            }
+        }
+        .ignoresSafeArea(edges: .top)
     }
 
     var image: some View {
@@ -142,5 +149,5 @@ private extension PodcastDetailView {
         seasonal: false,
         type: "episodic"
     ))
-    .environment(AudioPlayerViewModel())
+    .environment(NowPlayingViewModel())
 }

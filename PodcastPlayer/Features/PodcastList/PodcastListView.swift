@@ -11,9 +11,16 @@ struct PodcastListView: View {
     let model: PodcastListViewModel.LoadedUIModel
 
     @Environment(NavigationRouter<PodcastListScreen>.self) private var router
+    @Environment(NowPlayingViewModel.self) private var nowPlayingViewModel
 
     var body: some View {
         content
+            .safeAreaInset(edge: .bottom) {
+                if let episode = nowPlayingViewModel.currentlyPlayingEpisode {
+                    NowPlayingCompactView(episode: episode)
+                        .transition(.move(edge: .bottom))
+                }
+            }
     }
 }
 
@@ -37,7 +44,7 @@ private extension PodcastListView {
             }
         }
         .scrollIndicators(.hidden)
-        .ignoresSafeArea()
+        .ignoresSafeArea(edges: .top)
     }
 
     var podcastList: some View {

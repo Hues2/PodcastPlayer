@@ -1,5 +1,5 @@
 //
-//  AudioPlayerViewModel.swift
+//  NowPlayingViewModel.swift
 //  PodcastPlayer
 //
 //  Created by Greg Ross on 22/04/2026.
@@ -10,7 +10,7 @@ import Factory
 import PodcastPlayerAudioKit
 
 @Observable
-final class AudioPlayerViewModel {
+final class NowPlayingViewModel {
     private(set) var currentlyPlayingEpisode: EpisodeUIModel?
     private(set) var playbackState: PlaybackState = .idle
     private(set) var currentTime: Double = 0
@@ -20,6 +20,8 @@ final class AudioPlayerViewModel {
     var isLoading: Bool { playbackState == .loading || playbackState == .idle }
     var remainingTime: Double { max(duration - currentTime, 0) }
     private let skipSeconds: Double = 15
+
+    private(set) var isNowPlayingExpanded: Bool = false
 
     @ObservationIgnored @Injected(\.audioPlayerService) private var audioPlayerService
 
@@ -52,7 +54,7 @@ final class AudioPlayerViewModel {
 }
 
 // MARK: - Service Playback Methods
-extension AudioPlayerViewModel {
+extension NowPlayingViewModel {
     func startPlaying(episode: EpisodeUIModel) {
         // TODO: Handle invalid url
         guard let url = episode.audioURL else { return }
@@ -86,5 +88,14 @@ extension AudioPlayerViewModel {
     func skipForward() {
         guard currentlyPlayingEpisode != nil, !isLoading else { return }
         self.audioPlayerService.skipForward(seconds: skipSeconds)
+    }
+}
+
+// MARK: - UI Functionality
+extension NowPlayingViewModel {
+    func setIsNowPlayingExpanded(_ isExpanded: Bool) {
+        withAnimation(.snappy(duration: 0.3, extraBounce: 0.05)) {
+            self.isNowPlayingExpanded = isExpanded
+        }
     }
 }

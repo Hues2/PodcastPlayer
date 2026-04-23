@@ -10,9 +10,8 @@ import Kingfisher
 
 struct NowPlayingCompactView: View {
     let episode: EpisodeUIModel
-    let setIsExpanded: (Bool) -> Void
 
-    @Environment(AudioPlayerViewModel.self) private var audioPlayerViewModel
+    @Environment(NowPlayingViewModel.self) private var nowPlayingViewModel
 
     private enum Layout {
         static let imageCornerRadius: CGFloat = 8
@@ -33,7 +32,7 @@ private extension NowPlayingCompactView {
             infoView
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .contentShape(.rect)
-                .onTapGesture { setIsExpanded(true) }
+                .onTapGesture { nowPlayingViewModel.setIsNowPlayingExpanded(true) }
 
             PlayPauseButton(style: .compact)
         }
@@ -51,7 +50,7 @@ private extension NowPlayingCompactView {
                 .frame(width: Layout.imageSize, height: Layout.imageSize)
                 .clipShape(RoundedRectangle(cornerRadius: Layout.imageCornerRadius))
 
-            VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment: .leading, spacing: 4) {
                 Text(episode.title)
                     .font(.subheadline)
                     .fontWeight(.semibold)
@@ -83,6 +82,6 @@ private extension NowPlayingCompactView {
         podcastImageURL: URL(string: "https://the-podcasts.fly.dev/v1/images/dd556fcd-1330-5c13-b86e-5a02b858bdba")
     )
 
-    NowPlayingCompactView(episode: episode) { _ in }
-        .environment(AudioPlayerViewModel(currentlyPlayingEpisode: episode))
+    NowPlayingCompactView(episode: episode)
+        .environment(NowPlayingViewModel(currentlyPlayingEpisode: episode))
 }

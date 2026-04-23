@@ -10,7 +10,7 @@ import SwiftUI
 struct PlayPauseButton: View {
     var style: Style = .expanded
 
-    @Environment(AudioPlayerViewModel.self) private var audioPlayerViewModel
+    @Environment(NowPlayingViewModel.self) private var nowPlayingViewModel
 
     enum Style {
         case expanded
@@ -33,14 +33,14 @@ struct PlayPauseButton: View {
 
     var body: some View {
         Button {
-            guard !audioPlayerViewModel.isLoading else { return }
-            audioPlayerViewModel.playPauseAction()
+            guard !nowPlayingViewModel.isLoading else { return }
+            nowPlayingViewModel.playPauseAction()
         } label: {
             Group {
-                if audioPlayerViewModel.isLoading {
+                if nowPlayingViewModel.isLoading {
                     ProgressView()
                 } else {
-                    Image(systemName: audioPlayerViewModel.isPlaying ? "pause.fill" : "play.fill")
+                    Image(systemName: nowPlayingViewModel.isPlaying ? "pause.fill" : "play.fill")
                 }
             }
             .contentTransition(.symbolEffect(.replace))
@@ -69,8 +69,8 @@ struct PlayPauseButton: View {
         podcastImageURL: URL(string: "https://the-podcasts.fly.dev/v1/images/dd556fcd-1330-5c13-b86e-5a02b858bdba")
     )
 
-    NowPlayingExpandedView(episode: episode) { _ in }
-        .environment(AudioPlayerViewModel(currentlyPlayingEpisode: episode))
+    NowPlayingExpandedView(episode: episode)
+        .environment(NowPlayingViewModel(currentlyPlayingEpisode: episode))
 }
 
 #Preview("Compact") {
@@ -88,6 +88,6 @@ struct PlayPauseButton: View {
         podcastImageURL: URL(string: "https://the-podcasts.fly.dev/v1/images/dd556fcd-1330-5c13-b86e-5a02b858bdba")
     )
 
-    NowPlayingCompactView(episode: episode) { _ in }
-        .environment(AudioPlayerViewModel(currentlyPlayingEpisode: episode))
+    NowPlayingCompactView(episode: episode)
+        .environment(NowPlayingViewModel(currentlyPlayingEpisode: episode))
 }

@@ -10,9 +10,8 @@ import Kingfisher
 
 struct NowPlayingExpandedView: View {
     let episode: EpisodeUIModel
-    let setIsExpanded: (Bool) -> Void
 
-    @Environment(AudioPlayerViewModel.self) private var audioPlayerViewModel
+    @Environment(NowPlayingViewModel.self) private var nowPlayingViewModel
 
     private enum Layout {
         static let imageCornerRadius: CGFloat = 16
@@ -58,7 +57,7 @@ private extension NowPlayingExpandedView {
 
     var collapseButton: some View {
         Button {
-            setIsExpanded(false)
+            nowPlayingViewModel.setIsNowPlayingExpanded(false)
         } label: {
             Image(systemName: "chevron.down")
                 .font(.title3)
@@ -120,7 +119,7 @@ private extension NowPlayingExpandedView {
         podcastImageURL: URL(string: "https://the-podcasts.fly.dev/v1/images/dd556fcd-1330-5c13-b86e-5a02b858bdba")
     )
 
-    NowPlayingExpandedView(episode: episode) { _ in }
-        .environment(AudioPlayerViewModel(currentlyPlayingEpisode: episode))
+    NowPlayingExpandedView(episode: episode)
+        .environment(NowPlayingViewModel(currentlyPlayingEpisode: episode))
         .ignoresSafeArea()
 }

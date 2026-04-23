@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PlaybackControlsView: View {
-    @Environment(AudioPlayerViewModel.self) private var audioPlayerViewModel
+    @Environment(NowPlayingViewModel.self) private var nowPlayingViewModel
     @State private var isDragging = false
     @State private var dragValue: Double = .zero
 
@@ -38,28 +38,28 @@ private extension PlaybackControlsView {
 
     var bar: some View {
         Slider(
-            value: isDragging ? $dragValue : .constant(audioPlayerViewModel.currentTime),
-            in: 0...max(audioPlayerViewModel.duration, 1)
+            value: isDragging ? $dragValue : .constant(nowPlayingViewModel.currentTime),
+            in: 0...max(nowPlayingViewModel.duration, 1)
         ) { editing in
             if editing {
-                dragValue = audioPlayerViewModel.currentTime
+                dragValue = nowPlayingViewModel.currentTime
                 isDragging = true
             } else {
                 Task {
-                    await audioPlayerViewModel.seekTo(seconds: dragValue)
+                    await nowPlayingViewModel.seekTo(seconds: dragValue)
                     isDragging = false
                 }
             }
         }
         .tint(.primary)
-        .disabled(audioPlayerViewModel.isLoading)
+        .disabled(nowPlayingViewModel.isLoading)
     }
 
     var barInfo: some View {
         HStack(alignment: .center, spacing: 8) {
-            Text(formatTime(isDragging ? dragValue : audioPlayerViewModel.currentTime))
+            Text(formatTime(isDragging ? dragValue : nowPlayingViewModel.currentTime))
             Spacer()
-            Text("-\(formatTime(isDragging ? max(audioPlayerViewModel.duration - dragValue, 0) : audioPlayerViewModel.remainingTime))")
+            Text("-\(formatTime(isDragging ? max(nowPlayingViewModel.duration - dragValue, 0) : nowPlayingViewModel.remainingTime))")
         }
         .font(.caption)
         .foregroundStyle(.secondary)
@@ -85,12 +85,12 @@ private extension PlaybackControlsView {
         HStack(alignment: .center, spacing: 24) {
             skipButton(
                 iconName: "arrow.counterclockwise",
-                action: audioPlayerViewModel.skipBackward
+                action: nowPlayingViewModel.skipBackward
             )
             PlayPauseButton()
             skipButton(
                 iconName: "arrow.clockwise",
-                action: audioPlayerViewModel.skipForward
+                action: nowPlayingViewModel.skipForward
             )
         }
     }
@@ -107,7 +107,7 @@ private extension PlaybackControlsView {
                 .clipShape(.circle)
         }
         .buttonStyle(.plain)
-        .disabled(audioPlayerViewModel.isLoading)
+        .disabled(nowPlayingViewModel.isLoading)
     }
 }
 
@@ -127,5 +127,5 @@ private extension PlaybackControlsView {
     )
 
     PlaybackControlsView()
-        .environment(AudioPlayerViewModel(currentlyPlayingEpisode: episode))
+        .environment(NowPlayingViewModel(currentlyPlayingEpisode: episode))
 }

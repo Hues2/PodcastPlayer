@@ -10,13 +10,13 @@ import SwiftUI
 struct EpisodeView: View {
     let episode: EpisodeUIModel
 
-    @Environment(AudioPlayerViewModel.self) private var audioPlayerViewModel
+    @Environment(NowPlayingViewModel.self) private var nowPlayingViewModel
 
     var body: some View {
         content
             .contentShape(.rect)
             .onTapGesture {
-                audioPlayerViewModel.startPlaying(episode: episode)
+                nowPlayingViewModel.startPlaying(episode: episode)
             }
     }
 }

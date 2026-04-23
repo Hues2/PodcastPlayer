@@ -8,33 +8,18 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var audioPlayerViewModel = AudioPlayerViewModel()
-    @State private var isNowPlayingExpanded: Bool = false
+    @State private var nowPlayingViewModel = NowPlayingViewModel()
 
     var body: some View {
         PodcastListNavigationStack()
-            .safeAreaInset(edge: .bottom) {
-                if let episode = audioPlayerViewModel.currentlyPlayingEpisode {
-                    NowPlayingCompactView(episode: episode, setIsExpanded: setIsNowPlayingExpanded)
-                        .transition(.move(edge: .bottom))
-                }
-            }
             .overlay {
-                if let episode = audioPlayerViewModel.currentlyPlayingEpisode, isNowPlayingExpanded {
-                    NowPlayingExpandedView(episode: episode, setIsExpanded: setIsNowPlayingExpanded)
+                if let episode = nowPlayingViewModel.currentlyPlayingEpisode, nowPlayingViewModel.isNowPlayingExpanded {
+                    NowPlayingExpandedView(episode: episode)
                         .ignoresSafeArea()
                         .transition(.move(edge: .bottom))
                 }
             }
-            .environment(audioPlayerViewModel)
-    }
-}
-
-private extension ContentView {
-    func setIsNowPlayingExpanded(_ isExpanded: Bool) {
-        withAnimation(.snappy(duration: 0.3, extraBounce: 0.05)) {
-            self.isNowPlayingExpanded = isExpanded
-        }
+            .environment(nowPlayingViewModel)
     }
 }
 

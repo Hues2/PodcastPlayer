@@ -27,31 +27,9 @@ private extension PlaybackControlsView {
     var playbackButtons: some View {
         HStack(alignment: .center, spacing: 24) {
             skipButton(iconName: "arrow.counterclockwise", action: { })
-            playPauseButton
+            PlayPauseButton()
             skipButton(iconName: "arrow.clockwise", action: { })
         }
-    }
-
-    var playPauseButton: some View {
-        Button {
-            guard !audioPlayerViewModel.isLoading else { return }
-            audioPlayerViewModel.playPauseAction()
-        } label: {
-            Group {
-                if audioPlayerViewModel.isLoading {
-                    ProgressView()
-                } else {
-                    Image(systemName: audioPlayerViewModel.isPlaying ? "pause.fill" : "play.fill")
-                }
-            }
-            .contentTransition(.symbolEffect(.replace))
-            .font(.title)
-            .foregroundStyle(.primary)
-            .padding()
-            .background(.ultraThickMaterial)
-            .clipShape(.circle)
-        }
-        .buttonStyle(.plain)
     }
 
     func skipButton(iconName: String, action: @escaping () -> Void) -> some View {

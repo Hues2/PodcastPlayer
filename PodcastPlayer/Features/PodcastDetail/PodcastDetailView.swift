@@ -58,20 +58,29 @@ private extension PodcastDetailView {
         .ignoresSafeArea()
     }
 
+    var image: some View {
+        KFImage(viewModel.podcast.imageURL)
+            .resizable()
+            .scaledToFill()
+            .frame(height: imageHeight)
+            .frame(maxWidth: .infinity)
+            .clipped()
+            .stretchy()
+    }
+}
+
+// MARK: - Navigation Bar
+private extension PodcastDetailView {
     var navigationBar: some View {
-        HStack(alignment: .center, spacing: 8) {
-            Button {
-                dismiss()
-            } label: {
-                Image(systemName: "chevron.left")
-                    .foregroundStyle(.primary)
-                    .fontWeight(.semibold)
-                    .padding()
-                    .background(.thickMaterial)
-                    .clipShape(.circle)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .buttonStyle(.plain)
+        HStack(alignment: .center, spacing: 12) {
+            backButton
+
+            navigationTitle
+                .frame(maxWidth: .infinity, alignment: .center)
+                .opacity(showNavigationBackground ? 1 : 0)
+
+            backButton
+                .hidden()
         }
         .padding(16)
         .background {
@@ -85,14 +94,25 @@ private extension PodcastDetailView {
         }
     }
 
-    var image: some View {
-        KFImage(viewModel.podcast.imageURL)
-            .resizable()
-            .scaledToFill()
-            .frame(height: imageHeight)
-            .frame(maxWidth: .infinity)
-            .clipped()
-            .stretchy()
+    var backButton: some View {
+        Button {
+            dismiss()
+        } label: {
+            Image(systemName: "chevron.left")
+                .foregroundStyle(.primary)
+                .fontWeight(.semibold)
+                .padding()
+                .background(.thickMaterial)
+                .clipShape(.circle)
+        }
+        .buttonStyle(.plain)
+    }
+
+    var navigationTitle: some View {
+        Text(viewModel.podcast.title)
+            .font(.headline)
+            .foregroundStyle(.primary)
+            .lineLimit(1)
     }
 }
 
@@ -110,7 +130,7 @@ private extension PodcastDetailView {
 #Preview {
     PodcastDetailView(podcast: PodcastUIModel(
         id: 484971,
-        title: "The Rest Is History",
+        title: "The Rest Is History super long title for the podcast to test",
         author: "Goalhanger",
         categoryIds: [1487],
         description: "Take a deep dive into History's biggest moments with Tom Holland & Dominic Sandbrook.\n\nExplore the stories of History's most brutal rulers, deadly battles, and world-changing events.",
@@ -122,4 +142,5 @@ private extension PodcastDetailView {
         seasonal: false,
         type: "episodic"
     ))
+    .environment(AudioPlayerViewModel())
 }

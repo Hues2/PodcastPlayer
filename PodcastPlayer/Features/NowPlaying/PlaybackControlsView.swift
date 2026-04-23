@@ -9,6 +9,8 @@ import SwiftUI
 
 struct PlaybackControlsView: View {
     @Environment(AudioPlayerViewModel.self) private var audioPlayerViewModel
+    @State private var isScrubbing = false
+    @State private var scrubValue: Double = .zero
 
     var body: some View {
         content
@@ -28,7 +30,49 @@ private extension PlaybackControlsView {
 // MARK: - Seek Bar
 private extension PlaybackControlsView {
     var seekBar: some View {
-        Text("")
+        VStack(spacing: 8) {
+            bar
+            barInfo
+        }
+    }
+
+    var bar: some View {
+        Slider(
+            value: isScrubbing ? $scrubValue : .constant(audioPlayerViewModel.currentTime),
+            in: 0...max(audioPlayerViewModel.duration, 1)
+        ) { editing in
+            if editing {
+                scrubValue = audioPlayerViewModel.currentTime
+                isScrubbing = true
+            } else {
+                audioPlayerViewModel.seekTo(seconds: scrubValue)
+                isScrubbing = false
+            }
+        }
+        .tint(.primary)
+    }
+
+    var barInfo: some View {
+        HStack(alignment: .center, spacing: 8) {
+            Text(formatTime(isScrubbing ? scrubValue : audioPlayerViewModel.currentTime))
+            Spacer()
+            Text("-\(formatTime(isScrubbing ? max(audioPlayerViewModel.duration - scrubValue, 0) : audioPlayerViewModel.remainingTime))")
+        }
+        .font(.caption)
+        .foregroundStyle(.secondary)
+        .monospacedDigit()
+    }
+
+    func formatTime(_ seconds: Double) -> String {
+        guard seconds.isFinite, seconds >= 0 else { return "0:00" }
+        let totalSeconds = Int(seconds)
+        let hours = totalSeconds / 3600
+        let minutes = (totalSeconds % 3600) / 60
+        let secs = totalSeconds % 60
+        if hours > 0 {
+            return String(format: "%d:%02d:%02d", hours, minutes, secs)
+        }
+        return String(format: "%d:%02d", minutes, secs)
     }
 }
 

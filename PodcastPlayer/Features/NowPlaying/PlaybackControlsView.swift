@@ -9,8 +9,8 @@ import SwiftUI
 
 struct PlaybackControlsView: View {
     @Environment(AudioPlayerViewModel.self) private var audioPlayerViewModel
-    @State private var isScrubbing = false
-    @State private var scrubValue: Double = .zero
+    @State private var isDragging = false
+    @State private var dragValue: Double = .zero
 
     var body: some View {
         content
@@ -38,27 +38,28 @@ private extension PlaybackControlsView {
 
     var bar: some View {
         Slider(
-            value: isScrubbing ? $scrubValue : .constant(audioPlayerViewModel.currentTime),
+            value: isDragging ? $dragValue : .constant(audioPlayerViewModel.currentTime),
             in: 0...max(audioPlayerViewModel.duration, 1)
         ) { editing in
             if editing {
-                scrubValue = audioPlayerViewModel.currentTime
-                isScrubbing = true
+                dragValue = audioPlayerViewModel.currentTime
+                isDragging = true
             } else {
                 Task {
-                    await audioPlayerViewModel.seekTo(seconds: scrubValue)
-                    isScrubbing = false
+                    await audioPlayerViewModel.seekTo(seconds: dragValue)
+                    isDragging = false
                 }
             }
         }
         .tint(.primary)
+        .disabled(audioPlayerViewModel.isLoading)
     }
 
     var barInfo: some View {
         HStack(alignment: .center, spacing: 8) {
-            Text(formatTime(isScrubbing ? scrubValue : audioPlayerViewModel.currentTime))
+            Text(formatTime(isDragging ? dragValue : audioPlayerViewModel.currentTime))
             Spacer()
-            Text("-\(formatTime(isScrubbing ? max(audioPlayerViewModel.duration - scrubValue, 0) : audioPlayerViewModel.remainingTime))")
+            Text("-\(formatTime(isDragging ? max(audioPlayerViewModel.duration - dragValue, 0) : audioPlayerViewModel.remainingTime))")
         }
         .font(.caption)
         .foregroundStyle(.secondary)

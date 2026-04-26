@@ -48,7 +48,7 @@ private extension PodcastListView {
     }
 
     var podcastList: some View {
-        VStack(alignment: .leading, spacing: 48) {
+        LazyVStack(alignment: .leading, spacing: 48) {
             ForEach(model.podcastsByCategory.keys.sorted(), id: \.self) { categoryId in
                 if let podcasts = model.podcastsByCategory[categoryId] {
                     podcastSection(categoryId, podcasts)

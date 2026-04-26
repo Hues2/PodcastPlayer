@@ -21,6 +21,7 @@ struct ContentView: View {
             ) {
                 if let episode = nowPlayingViewModel.currentlyPlayingEpisode, nowPlayingViewModel.isNowPlayingExpanded {
                     NowPlayingExpandedView(episode: episode)
+                        .presentationDetents([.large])
                         .dynamicTypeSize(.xSmall ... .accessibility1)
                 }
             }

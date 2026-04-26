@@ -4,10 +4,22 @@
     "An unexpected error occurred. Please try again." : {
       "extractionState" : "manual"
     },
+    "No Episodes Found" : {
+      "extractionState" : "manual"
+    },
     "No Podcasts Found" : {
       "extractionState" : "manual"
     },
     "Oops, Something Went Wrong" : {
+      "extractionState" : "manual"
+    },
+    "This episode's audio link is unavailable or invalid. Please try a different episode." : {
+      "extractionState" : "manual"
+    },
+    "Unable to Play Episode" : {
+      "extractionState" : "manual"
+    },
+    "We couldn't find any episodes for this podcast right now. Please try again later." : {
       "extractionState" : "manual"
     },
     "We couldn't find any podcasts right now. Please try again later." : {

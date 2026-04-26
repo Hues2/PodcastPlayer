@@ -25,6 +25,17 @@ struct ContentView: View {
                 }
             }
             .environment(nowPlayingViewModel)
+            .alert(
+                nowPlayingViewModel.error?.errorTitle ?? "",
+                isPresented: Binding(
+                    get: { nowPlayingViewModel.error != nil },
+                    set: { if !$0 { nowPlayingViewModel.error = nil } }
+                )
+            ) {
+                Button("Ok", role: .cancel) { }
+            } message: {
+                Text(nowPlayingViewModel.error?.errorDescription ?? "")
+            }
     }
 }
 

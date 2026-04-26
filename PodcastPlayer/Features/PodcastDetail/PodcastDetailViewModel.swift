@@ -12,7 +12,7 @@ import Factory
 @Observable
 final class PodcastDetailViewModel {
     let podcast: PodcastUIModel
-    
+
     private(set) var episodeListState: EpisodeListState = .idle
 
     // Dependencies
@@ -35,8 +35,7 @@ final class PodcastDetailViewModel {
                 return episodeUIModel
             } ?? []
 
-            // TODO: No episodes available - not podcasts
-            guard !episodes.isEmpty else { throw AppError.noPodcastsAvailable }
+            guard !episodes.isEmpty else { throw AppError.noEpisodesAvailable }
 
             episodeListState = .loaded(episodes)
         } catch {

@@ -22,6 +22,7 @@ final class NowPlayingViewModel {
     private let skipSeconds: Double = 15
 
     private(set) var isNowPlayingExpanded: Bool = false
+    var error: AppError?
 
     @ObservationIgnored @Injected(\.audioPlayerService) private var audioPlayerService
 
@@ -58,8 +59,11 @@ extension NowPlayingViewModel {
     func startPlaying(episode: EpisodeUIModel) {
         self.resetPlayback()
 
-        // TODO: Handle invalid url
-        guard let url = episode.audioURL else { return }
+        guard let url = episode.audioURL else {
+            self.error = .invalidEpisodeURL
+            self.currentlyPlayingEpisode = nil
+            return
+        }
 
         withAnimation(.snappy(duration: 0.3)) {
             self.currentlyPlayingEpisode = episode

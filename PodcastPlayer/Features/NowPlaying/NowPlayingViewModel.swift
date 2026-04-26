@@ -56,7 +56,15 @@ final class NowPlayingViewModel {
 
 // MARK: - Service Playback Methods
 extension NowPlayingViewModel {
-    func startPlaying(episode: EpisodeUIModel) {
+    func onEpisodeSelected(episode: EpisodeUIModel) {
+        if currentlyPlayingEpisode == episode {
+            setIsNowPlayingExpanded(true)
+        } else {
+            startPlaying(episode: episode)
+        }
+    }
+
+    private func startPlaying(episode: EpisodeUIModel) {
         self.resetPlayback()
 
         guard let url = episode.audioURL else {

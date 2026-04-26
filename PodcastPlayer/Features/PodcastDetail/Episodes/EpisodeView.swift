@@ -16,7 +16,7 @@ struct EpisodeView: View {
         content
             .contentShape(.rect)
             .onTapGesture {
-                nowPlayingViewModel.startPlaying(episode: episode)
+                nowPlayingViewModel.onEpisodeSelected(episode: episode)
             }
     }
 }
@@ -53,9 +53,10 @@ private extension EpisodeView {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
 
-            Image(systemName: "play.circle.fill")
+            Image(systemName: nowPlayingViewModel.currentlyPlayingEpisode == episode ? "pause.circle.fill" : "play.circle.fill")
                 .font(.title2)
                 .foregroundStyle(Color.accentColor)
+                .contentTransition(.symbolEffect(.replace))
         }
         .padding(.vertical, 8)
     }

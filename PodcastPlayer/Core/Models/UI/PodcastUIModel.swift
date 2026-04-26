@@ -44,4 +44,9 @@ extension PodcastUIModel {
         self.seasonal = dto.seasonal ?? false
         self.type = dto.type
     }
+
+    init?(_ dto: SinglePodcastDTO) {
+        guard let podcast = dto.podcast else { return nil }
+        self.init(podcast)
+    }
 }

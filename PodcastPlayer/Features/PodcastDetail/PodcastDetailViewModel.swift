@@ -118,7 +118,7 @@ extension PodcastDetailViewModel {
 // MARK: - Network Requests
 extension PodcastDetailViewModel {
     struct FetchPodcastRequest: NetworkRequest {
-        typealias Response = PodcastDTO
+        typealias Response = SinglePodcastDTO
 
         let podcastId: Int
 

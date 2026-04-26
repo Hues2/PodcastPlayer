@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PodcastListNavigationStack: View {
-    @State private var router = NavigationRouter<PodcastListScreen>()
+    @Bindable var router: NavigationRouter<PodcastListScreen>
     @State private var podcastListViewModel = PodcastListViewModel()
 
     var body: some View {
@@ -26,5 +26,5 @@ struct PodcastListNavigationStack: View {
 }
 
 #Preview {
-    PodcastListNavigationStack()
+    PodcastListNavigationStack(router: .init())
 }

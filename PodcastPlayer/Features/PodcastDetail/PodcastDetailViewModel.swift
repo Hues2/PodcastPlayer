@@ -22,6 +22,10 @@ final class PodcastDetailViewModel {
         self.podcast = podcast
     }
 
+    init(id: Int) {
+        
+    }
+
     func fetchEpisodes() async {
         guard episodeListState.isIdle || episodeListState.isError else { return }
         episodeListState = .loading

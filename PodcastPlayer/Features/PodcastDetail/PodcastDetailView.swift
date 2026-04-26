@@ -17,6 +17,10 @@ struct PodcastDetailView: View {
         self._viewModel = State(initialValue: PodcastDetailViewModel(podcast: podcast))
     }
 
+    init(id: Int) {
+        self._viewModel = State(initialValue: PodcastDetailViewModel(podcast: podcast))
+    }
+
     // Scroll State
     @State private var scrollOffset: CGFloat = 0
     @State private var scrollPosition = ScrollPosition()

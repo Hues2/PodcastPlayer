@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var router = NavigationRouter<PodcastListScreen>()
     @State private var nowPlayingViewModel = NowPlayingViewModel()
 
     var body: some View {
-        PodcastListNavigationStack()
+        PodcastListNavigationStack(router: router)
             .sheet(
                 isPresented: Binding(
                     get: { nowPlayingViewModel.isNowPlayingExpanded &&
@@ -36,6 +37,13 @@ struct ContentView: View {
                 Button("Ok", role: .cancel) { }
             } message: {
                 Text(nowPlayingViewModel.error?.errorDescription ?? "")
+            }
+            .onOpenURL { url in
+                guard let deeplink = Deeplink(url: url) else { return }
+                switch deeplink {
+                case .podcast(let id):
+                    break
+                }
             }
     }
 }

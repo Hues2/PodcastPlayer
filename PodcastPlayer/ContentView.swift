@@ -42,7 +42,7 @@ struct ContentView: View {
                 guard let deeplink = Deeplink(url: url) else { return }
                 switch deeplink {
                 case .podcast(let id):
-                    break
+                    router.push(.podcastDetailById(id))
                 }
             }
     }

@@ -18,6 +18,8 @@ struct PodcastListNavigationStack: View {
                     switch screen {
                     case .podcastDetail(let podcast):
                         PodcastDetailView(podcast: podcast)
+                    case .podcastDetailById(let id):
+                        PodcastDetailView(id: id)
                     }
                 }
         }

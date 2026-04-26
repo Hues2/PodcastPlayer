@@ -18,7 +18,7 @@ struct PodcastDetailView: View {
     }
 
     init(id: Int) {
-        self._viewModel = State(initialValue: PodcastDetailViewModel(podcast: podcast))
+        self._viewModel = State(initialValue: PodcastDetailViewModel(id: id))
     }
 
     // Scroll State
@@ -30,24 +30,42 @@ struct PodcastDetailView: View {
     private let imageHeight: CGFloat = 400
 
     var body: some View {
-        content
-            .overlay(alignment: .top) {
-                navigationBar
+        Group {
+            switch viewModel.podcastState {
+            case .idle, .loading:
+                ProgressView()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            case .error(let error):
+                ErrorView(error: error)
+            case .loaded(let podcast):
+                content(podcast: podcast)
             }
-            .toolbarVisibility(.hidden, for: .navigationBar)
-            .task { await viewModel.fetchEpisodes() }
+        }
+        .overlay(alignment: .top) {
+            if case .loaded(let podcast) = viewModel.podcastState {
+                navigationBar(podcast: podcast)
+            }
+        }
+        .toolbarVisibility(.hidden, for: .navigationBar)
+        .task {
+            if viewModel.podcast == nil {
+                await viewModel.fetchPodcast()
+            } else {
+                await viewModel.fetchEpisodes()
+            }
+        }
     }
 }
 
 private extension PodcastDetailView {
-    var content: some View {
+    func content(podcast: PodcastUIModel) -> some View {
         ScrollView {
             VStack(alignment: .leading, spacing: .zero) {
-                image
+                image(podcast: podcast)
                     .offset(y: max(0, scrollOffset))
 
                 PodcastDetailContentView(
-                    podcast: viewModel.podcast,
+                    podcast: podcast,
                     isScrolled: isScrolled,
                     episodeListState: viewModel.episodeListState
                 )
@@ -69,8 +87,8 @@ private extension PodcastDetailView {
         .ignoresSafeArea(edges: .top)
     }
 
-    var image: some View {
-        KFImage(viewModel.podcast.imageURL)
+    func image(podcast: PodcastUIModel) -> some View {
+        KFImage(podcast.imageURL)
             .resizable()
             .scaledToFill()
             .frame(height: imageHeight)
@@ -82,14 +100,14 @@ private extension PodcastDetailView {
 
 // MARK: - Navigation Bar
 private extension PodcastDetailView {
-    var navigationBar: some View {
+    func navigationBar(podcast: PodcastUIModel) -> some View {
         HStack(alignment: .center, spacing: 12) {
             backButton
 
-            navigationTitle
+            navigationTitle(podcast: podcast)
                 .frame(maxWidth: .infinity, alignment: .center)
                 .opacity(showNavigationBackground ? 1 : 0)
-
+            
             backButton
                 .hidden()
         }
@@ -119,8 +137,8 @@ private extension PodcastDetailView {
         .buttonStyle(.plain)
     }
 
-    var navigationTitle: some View {
-        Text(viewModel.podcast.title)
+    func navigationTitle(podcast: PodcastUIModel) -> some View {
+        Text(podcast.title)
             .font(.headline)
             .foregroundStyle(.primary)
             .lineLimit(1)

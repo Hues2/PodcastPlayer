@@ -10,7 +10,7 @@ import Foundation
 enum Deeplink {
     case podcast(id: Int)
 
-    static let podcastHost: String = "podcast"
+    static let podcastURLHost: String = "podcasts"
 }
 
 extension Deeplink {
@@ -22,7 +22,7 @@ extension Deeplink {
         let pathComponents = url.pathComponents.withAllSlashComponentsRemoved()
 
         switch urlHost {
-        case Self.podcastHost:
+        case Self.podcastURLHost:
             guard let id = Self.getPodcastId(pathComponents) else { return nil }
             self = .podcast(id: id)
         default:

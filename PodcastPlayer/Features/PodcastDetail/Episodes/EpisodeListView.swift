@@ -24,7 +24,7 @@ struct EpisodeListView: View {
     }
 
     var header: some View {
-        HStack(alignment: .center, spacing: 4) {
+        HStack(alignment: .center, spacing: 8) {
             Image(systemName: "list.bullet")
             Text(.podcastDetail("Episodes"))
         }

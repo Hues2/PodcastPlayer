@@ -34,7 +34,7 @@ struct ContentView: View {
                     set: { if !$0 { nowPlayingViewModel.error = nil } }
                 )
             ) {
-                Button("Ok", role: .cancel) { }
+                Button(.error("Ok"), role: .cancel) { }
             } message: {
                 Text(nowPlayingViewModel.error?.errorDescription ?? "")
             }

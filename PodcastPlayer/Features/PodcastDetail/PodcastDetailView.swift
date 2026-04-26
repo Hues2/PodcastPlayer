@@ -30,35 +30,33 @@ struct PodcastDetailView: View {
     private let imageHeight: CGFloat = 400
 
     var body: some View {
+        content
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .overlay(alignment: .top) { navigationBar(podcast: viewModel.podcast) }
+            .toolbarVisibility(.hidden, for: .navigationBar)
+            .task { await viewModel.fetchData() }
+    }
+}
+
+// MARK: - View Content
+private extension PodcastDetailView {
+    var content: some View {
         Group {
             switch viewModel.podcastState {
             case .idle, .loading:
                 ProgressView()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
             case .error(let error):
-                ErrorView(error: error)
+                ErrorView(error: error, buttonTitle: .error("Ok")) { dismiss() }                    
             case .loaded(let podcast):
-                content(podcast: podcast)
-            }
-        }
-        .overlay(alignment: .top) {
-            if case .loaded(let podcast) = viewModel.podcastState {
-                navigationBar(podcast: podcast)
-            }
-        }
-        .toolbarVisibility(.hidden, for: .navigationBar)
-        .task {
-            if viewModel.podcast == nil {
-                await viewModel.fetchPodcast()
-            } else {
-                await viewModel.fetchEpisodes()
+                loadedContentView(podcast: podcast)
             }
         }
     }
 }
 
+// MARK: - Loaded View Content
 private extension PodcastDetailView {
-    func content(podcast: PodcastUIModel) -> some View {
+    func loadedContentView(podcast: PodcastUIModel) -> some View {
         ScrollView {
             VStack(alignment: .leading, spacing: .zero) {
                 image(podcast: podcast)
@@ -100,14 +98,14 @@ private extension PodcastDetailView {
 
 // MARK: - Navigation Bar
 private extension PodcastDetailView {
-    func navigationBar(podcast: PodcastUIModel) -> some View {
+    func navigationBar(podcast: PodcastUIModel?) -> some View {
         HStack(alignment: .center, spacing: 12) {
             backButton
 
             navigationTitle(podcast: podcast)
                 .frame(maxWidth: .infinity, alignment: .center)
                 .opacity(showNavigationBackground ? 1 : 0)
-            
+
             backButton
                 .hidden()
         }
@@ -137,8 +135,8 @@ private extension PodcastDetailView {
         .buttonStyle(.plain)
     }
 
-    func navigationTitle(podcast: PodcastUIModel) -> some View {
-        Text(podcast.title)
+    func navigationTitle(podcast: PodcastUIModel?) -> some View {
+        Text(podcast?.title ?? "")
             .font(.headline)
             .foregroundStyle(.primary)
             .lineLimit(1)

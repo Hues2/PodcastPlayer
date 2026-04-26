@@ -20,33 +20,43 @@ final class PodcastDetailViewModel {
     // Dependencies
     @ObservationIgnored @Injected(\.networkService) private var networkService
 
+    /// Used for standard navigation
     init(podcast: PodcastUIModel) {
         self.podcastId = podcast.id
         self.podcast = podcast
         self.podcastState = .loaded(podcast)
     }
 
+    /// Used for deeplink navigation
     init(id: Int) {
         self.podcastId = id
     }
 
-    func fetchPodcast() async {
+    func fetchData() async {
+        if podcast == nil {
+            await fetchPodcast()
+        } else {
+            await fetchEpisodes()
+        }
+    }
+
+    private func fetchPodcast() async {
         guard podcastState.isIdle || podcastState.isError else { return }
         podcastState = .loading
 
         do {
             let response = try await networkService.perform(FetchPodcastRequest(podcastId: podcastId))
-            guard let podcast = PodcastUIModel(response) else { throw AppError.default }
+            guard let podcast = PodcastUIModel(response) else { throw AppError.podcastNotFound }
             self.podcast = podcast
             podcastState = .loaded(podcast)
             await fetchEpisodes()
         } catch {
-            let appError: AppError = error as? AppError ?? .default
+            let appError: AppError = error as? AppError ?? .podcastNotFound
             podcastState = .error(appError)
         }
     }
 
-    func fetchEpisodes() async {
+    private func fetchEpisodes() async {
         guard let podcast else { return }
         guard episodeListState.isIdle || episodeListState.isError else { return }
         episodeListState = .loading

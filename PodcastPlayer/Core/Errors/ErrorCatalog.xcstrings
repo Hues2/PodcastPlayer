@@ -10,10 +10,19 @@
     "No Podcasts Found" : {
       "extractionState" : "manual"
     },
+    "Ok" : {
+      "extractionState" : "manual"
+    },
     "Oops, Something Went Wrong" : {
       "extractionState" : "manual"
     },
+    "Podcast Not Found" : {
+      "extractionState" : "manual"
+    },
     "This episode's audio link is unavailable or invalid. Please try a different episode." : {
+      "extractionState" : "manual"
+    },
+    "Try again" : {
       "extractionState" : "manual"
     },
     "Unable to Play Episode" : {
@@ -23,6 +32,9 @@
       "extractionState" : "manual"
     },
     "We couldn't find any podcasts right now. Please try again later." : {
+      "extractionState" : "manual"
+    },
+    "We couldn't find that podcast. It may no longer be available." : {
       "extractionState" : "manual"
     }
   },

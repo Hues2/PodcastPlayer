@@ -12,6 +12,7 @@ enum AppError: LocalizedError {
     case noPodcastsAvailable
     case noEpisodesAvailable
     case invalidEpisodeURL
+    case podcastNotFound
     case `default`
 
     var errorTitle: String? {
@@ -24,6 +25,8 @@ enum AppError: LocalizedError {
             return String.error("No Episodes Found")
         case .invalidEpisodeURL:
             return String.error("Unable to Play Episode")
+        case .podcastNotFound:
+            return String.error("Podcast Not Found")
         case .default:
             return String.error("Oops, Something Went Wrong")
         }
@@ -39,6 +42,8 @@ enum AppError: LocalizedError {
             return String.error("We couldn't find any episodes for this podcast right now. Please try again later.")
         case .invalidEpisodeURL:
             return String.error("This episode's audio link is unavailable or invalid. Please try a different episode.")
+        case .podcastNotFound:
+            return String.error("We couldn't find that podcast. It may no longer be available.")
         case .default:
             return String.error("An unexpected error occurred. Please try again.")
         }

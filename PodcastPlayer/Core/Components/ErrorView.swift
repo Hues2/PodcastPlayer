@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ErrorView: View {
     let error: AppError
+    var buttonTitle: String = .error("Try again")
     var action: (() -> Void)? = nil
 
     var body: some View {
@@ -29,7 +30,7 @@ struct ErrorView: View {
 
             if let action {
                 Button(action: action) {
-                    Text("Try Again")
+                    Text(buttonTitle)
                         .font(.subheadline)
                         .fontWeight(.semibold)
                 }

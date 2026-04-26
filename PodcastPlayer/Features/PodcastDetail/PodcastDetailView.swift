@@ -46,7 +46,7 @@ private extension PodcastDetailView {
             case .idle, .loading:
                 ProgressView()
             case .error(let error):
-                ErrorView(error: error, buttonTitle: .error("Ok")) { dismiss() }                    
+                ErrorView(error: error, buttonTitle: .error("Ok")) { dismiss() }
             case .loaded(let podcast):
                 loadedContentView(podcast: podcast)
             }
@@ -106,8 +106,12 @@ private extension PodcastDetailView {
                 .frame(maxWidth: .infinity, alignment: .center)
                 .opacity(showNavigationBackground ? 1 : 0)
 
-            backButton
-                .hidden()
+            if let url = viewModel.getShareURL() {
+                shareButton(url: url)
+            } else {
+                backButton
+                    .hidden()
+            }
         }
         .padding(16)
         .background {
@@ -121,18 +125,29 @@ private extension PodcastDetailView {
         }
     }
 
+    func shareButton(url: URL) -> some View {
+        ShareLink(item: url) {
+            navigationButtonLabel("square.and.arrow.up")
+        }
+        .buttonStyle(.plain)
+    }
+
     var backButton: some View {
         Button {
             dismiss()
         } label: {
-            Image(systemName: "chevron.left")
-                .foregroundStyle(.primary)
-                .fontWeight(.semibold)
-                .padding()
-                .background(.thickMaterial)
-                .clipShape(.circle)
+            navigationButtonLabel("chevron.left")
         }
         .buttonStyle(.plain)
+    }
+
+    func navigationButtonLabel(_ icon: String) -> some View {
+        Image(systemName: icon)
+            .foregroundStyle(.primary)
+            .fontWeight(.semibold)
+            .padding()
+            .background(.thickMaterial)
+            .clipShape(.circle)
     }
 
     func navigationTitle(podcast: PodcastUIModel?) -> some View {

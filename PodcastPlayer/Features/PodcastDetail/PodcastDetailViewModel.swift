@@ -80,6 +80,14 @@ final class PodcastDetailViewModel {
     }
 }
 
+extension PodcastDetailViewModel {
+    func getShareURL() -> URL? {
+        guard let podcast,
+              let uriScheme: String = Utils.infoPlistValue(for: "URI_SCHEME") else { return nil }
+        return URL(string: uriScheme + "://" + Deeplink.podcastURLHost + "/\(podcast.id)")
+    }
+}
+
 // MARK: - Podcast State
 extension PodcastDetailViewModel {
     enum PodcastState {

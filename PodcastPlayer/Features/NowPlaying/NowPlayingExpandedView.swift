@@ -20,11 +20,8 @@ struct NowPlayingExpandedView: View {
     }
 
     var body: some View {
-        content
-            .safeAreaPadding()
-            .padding(.vertical, Layout.screenPadding)
+        content            
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-            .background(.background)
     }
 }
 

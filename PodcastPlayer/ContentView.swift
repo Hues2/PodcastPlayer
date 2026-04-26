@@ -12,11 +12,16 @@ struct ContentView: View {
 
     var body: some View {
         PodcastListNavigationStack()
-            .overlay {
+            .sheet(
+                isPresented: Binding(
+                    get: { nowPlayingViewModel.isNowPlayingExpanded &&
+                        nowPlayingViewModel.currentlyPlayingEpisode != nil },
+                    set: { nowPlayingViewModel.setIsNowPlayingExpanded($0) }
+                )
+            ) {
                 if let episode = nowPlayingViewModel.currentlyPlayingEpisode, nowPlayingViewModel.isNowPlayingExpanded {
                     NowPlayingExpandedView(episode: episode)
-                        .ignoresSafeArea()
-                        .transition(.move(edge: .bottom))
+                        .dynamicTypeSize(.xSmall ... .accessibility1)
                 }
             }
             .environment(nowPlayingViewModel)

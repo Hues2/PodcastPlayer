@@ -9,10 +9,11 @@ import SwiftUI
 
 struct PodcastListNavigationStack: View {
     @State private var router = NavigationRouter<PodcastListScreen>()
+    @State private var podcastListViewModel = PodcastListViewModel()
 
     var body: some View {
         NavigationStack(path: $router.path) {
-            PodcastListStateView()
+            PodcastListStateView(viewModel: podcastListViewModel)
                 .navigationDestination(for: PodcastListScreen.self) { screen in
                     switch screen {
                     case .podcastDetail(let podcast):

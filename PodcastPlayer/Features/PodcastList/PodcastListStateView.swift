@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PodcastListStateView: View {
-    @State private var viewModel = PodcastListViewModel()
+    var viewModel: PodcastListViewModel
 
     var body: some View {
         content
@@ -38,5 +38,5 @@ private extension PodcastListStateView {
 }
 
 #Preview {
-    PodcastListStateView()
+    PodcastListStateView(viewModel: PodcastListViewModel())
 }

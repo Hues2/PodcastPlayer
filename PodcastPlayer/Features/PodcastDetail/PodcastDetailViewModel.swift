@@ -83,8 +83,7 @@ final class PodcastDetailViewModel {
 
 extension PodcastDetailViewModel {
     func getShareURL() -> URL? {
-        guard let podcast else { return nil }
-        return Deeplink.getPodcastDetailDeeplink(for: podcastId)
+        Deeplink.getPodcastDetailDeeplink(for: podcastId)
     }
 }
 

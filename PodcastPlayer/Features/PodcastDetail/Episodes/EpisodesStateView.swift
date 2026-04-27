@@ -9,6 +9,7 @@ import SwiftUI
 
 struct EpisodesStateView: View {
     let listState: PodcastDetailViewModel.EpisodeListState
+    let fetchEpisodes: () -> Void
 
     var body: some View {
         content
@@ -23,7 +24,11 @@ private extension EpisodesStateView {
         case .idle, .loading:
             ProgressView()
         case .error(let error):
-            ErrorView(error: error)
+            if error == .noEpisodesAvailable {
+                ErrorView(error: error)
+            } else {
+                ErrorView(error: error) { fetchEpisodes() }
+            }
         case .loaded(let episodes):
             EpisodeListView(episodes: episodes)
         }
@@ -31,11 +36,11 @@ private extension EpisodesStateView {
 }
 
 #Preview("Loading") {
-    EpisodesStateView(listState: .loading)
+    EpisodesStateView(listState: .loading) { }
 }
 
 #Preview("Error") {
-    EpisodesStateView(listState: .error(.default))
+    EpisodesStateView(listState: .error(.default)) { }
 }
 
 #Preview("Loaded") {
@@ -62,5 +67,5 @@ private extension EpisodesStateView {
             type: "full",
             audioURL: nil
         ),
-    ]))
+    ])) { }
 }

@@ -65,7 +65,12 @@ private extension PodcastDetailView {
                 PodcastDetailContentView(
                     podcast: podcast,
                     isScrolled: isScrolled,
-                    episodeListState: viewModel.episodeListState
+                    episodeListState: viewModel.episodeListState,
+                    fetchEpisodes: {
+                        Task {
+                            await viewModel.fetchData()
+                        }
+                    }
                 )
             }
         }

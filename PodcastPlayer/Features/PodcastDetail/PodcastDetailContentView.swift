@@ -11,6 +11,7 @@ struct PodcastDetailContentView: View {
     let podcast: PodcastUIModel
     let isScrolled: Bool
     let episodeListState: PodcastDetailViewModel.EpisodeListState
+    let fetchEpisodes: () -> Void
 
     var body: some View {
         content
@@ -36,7 +37,10 @@ private extension PodcastDetailContentView {
 
                 Divider()
 
-                EpisodesStateView(listState: episodeListState)
+                EpisodesStateView(
+                    listState: episodeListState,
+                    fetchEpisodes: fetchEpisodes
+                )
                     .padding(.horizontal, 24)
             }
         }

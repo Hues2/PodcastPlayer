@@ -36,7 +36,7 @@ private extension PodcastListHeaderView {
     }
 
     var infoView: some View {
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: 8) {
             HStack(alignment: .center, spacing: 4) {
                 Image(systemName: "sparkles")
                 Text(.podcastList("Featured"))

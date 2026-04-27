@@ -145,7 +145,7 @@ private extension PodcastDetailView {
     func navigationButtonLabel(_ icon: String) -> some View {
         Image(systemName: icon)
             .foregroundStyle(.primary)
-            .fontWeight(.semibold)
+            .fontWeight(.regular)
             .padding()
             .background(.thickMaterial)
             .clipShape(.circle)

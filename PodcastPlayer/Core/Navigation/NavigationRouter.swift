@@ -10,7 +10,7 @@ import SwiftUI
 protocol Screen: Hashable {}
 
 @Observable
-class NavigationRouter<S: Screen> {
+final class NavigationRouter<S: Screen> {
     var path: NavigationPath = NavigationPath()
 
     func push(_ screen: S) {

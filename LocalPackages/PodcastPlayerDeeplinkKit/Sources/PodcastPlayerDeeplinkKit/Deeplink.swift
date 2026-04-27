@@ -1,22 +1,25 @@
 //
 //  Deeplink.swift
-//  PodcastPlayer
+//  PodcastPlayerDeeplinkKit
 //
-//  Created by Greg Ross on 26/04/2026.
+//  Created by Greg Ross on 27/04/2026.
 //
 
 import Foundation
 
-enum Deeplink {
+public enum Deeplink {
     case podcast(id: Int)
 
-    static let podcastURLHost: String = "podcasts"
+    // MARK: - URI Scheme
+    public static let uriScheme: String = "podcastplayer"
+
+    // MARK: - URL Hosts
+    public static let podcastURLHost: String = "podcasts"
 }
 
 extension Deeplink {
-    init?(url: URL) {
-        guard let uriScheme: String = Utils.infoPlistValue(for: "URI_SCHEME"),
-              url.scheme == uriScheme,
+    public init?(url: URL) {
+        guard url.scheme == Self.uriScheme,
               let urlHost = url.host else { return nil }
 
         let pathComponents = url.pathComponents.withAllSlashComponentsRemoved()

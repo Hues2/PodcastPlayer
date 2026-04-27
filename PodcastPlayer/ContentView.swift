@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PodcastPlayerDeeplinkKit
 
 struct ContentView: View {
     @State private var router = NavigationRouter<PodcastListScreen>()

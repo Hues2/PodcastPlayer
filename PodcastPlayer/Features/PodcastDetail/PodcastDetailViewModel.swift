@@ -7,6 +7,7 @@
 
 import Foundation
 import PodcastPlayerNetworkingKit
+import PodcastPlayerDeeplinkKit
 import Factory
 
 @Observable
@@ -82,9 +83,8 @@ final class PodcastDetailViewModel {
 
 extension PodcastDetailViewModel {
     func getShareURL() -> URL? {
-        guard let podcast,
-              let uriScheme: String = Utils.infoPlistValue(for: "URI_SCHEME") else { return nil }
-        return URL(string: uriScheme + "://" + Deeplink.podcastURLHost + "/\(podcast.id)")
+        guard let podcast else { return nil }
+        return URL(string: Deeplink.uriScheme + "://" + Deeplink.podcastURLHost + "/\(podcast.id)")
     }
 }
 

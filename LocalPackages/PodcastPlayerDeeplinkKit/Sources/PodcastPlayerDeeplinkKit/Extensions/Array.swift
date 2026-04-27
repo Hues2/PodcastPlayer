@@ -1,8 +1,8 @@
 //
 //  Array.swift
-//  PodcastPlayer
+//  PodcastPlayerDeeplinkKit
 //
-//  Created by Greg Ross on 26/04/2026.
+//  Created by Greg Ross on 27/04/2026.
 //
 
 import Foundation

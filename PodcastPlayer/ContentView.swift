@@ -43,6 +43,7 @@ struct ContentView: View {
                 guard let deeplink = Deeplink(url: url) else { return }
                 switch deeplink {
                 case .podcast(let id):
+                    guard !router.lastScreen.isPodcastDetail(id: id) else { return }
                     router.push(.podcastDetailById(id))
                 }
             }

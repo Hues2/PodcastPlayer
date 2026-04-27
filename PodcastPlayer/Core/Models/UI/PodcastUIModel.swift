@@ -29,7 +29,7 @@ extension PodcastUIModel {
         self.id = id
         self.title = dto.title ?? "Unknown Podcast"
         self.author = dto.author
-        self.categoryIds = dto.categoryIds ?? []
+        self.categoryIds = dto.categoryIds
         self.description = dto.description
         if let baseUrl: String = Utils.infoPlistValue(for: "API_BASE_URL"),
            let imageId = dto.image {

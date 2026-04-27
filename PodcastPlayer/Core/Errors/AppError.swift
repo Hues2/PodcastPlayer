@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum AppError: LocalizedError {
+enum AppError: LocalizedError, Equatable {
     case custom(String)
     case noPodcastsAvailable
     case noEpisodesAvailable

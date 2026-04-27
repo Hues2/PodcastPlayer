@@ -63,7 +63,7 @@ final class PodcastDetailViewModel {
         episodeListState = .loading
 
         do {
-            let response = try await networkService.perform(FetchEpisodesRequest(podcastId: podcast.id))
+            let response = try await networkService.perform(FetchEpisodesRequest(podcastId: podcastId))
             let episodes: [EpisodeUIModel] = response.results?.compactMap {
                 var episodeUIModel = EpisodeUIModel($0)
                 episodeUIModel?.podcastTitle = podcast.title
@@ -84,7 +84,7 @@ final class PodcastDetailViewModel {
 extension PodcastDetailViewModel {
     func getShareURL() -> URL? {
         guard let podcast else { return nil }
-        return URL(string: Deeplink.uriScheme + "://" + Deeplink.podcastURLHost + "/\(podcast.id)")
+        return Deeplink.getPodcastDetailDeeplink(for: podcastId)
     }
 }
 

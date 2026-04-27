@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum Deeplink {
+public enum Deeplink: Equatable {
     case podcast(id: Int)
 
     // MARK: - URI Scheme
@@ -35,9 +35,17 @@ extension Deeplink {
     }
 }
 
+// MARK: - URL Generation
+extension Deeplink {
+    public static func getPodcastDetailDeeplink(for id: Int) -> URL? {
+        URL(string: "\(uriScheme)://\(podcastURLHost)/\(id)")
+    }
+}
+
 // MARK: Helper methods
 private extension Deeplink {
     static func getPodcastId(_ pathComponents: [String]) -> Int? {
-        return Int(pathComponents.first ?? "")
+        guard let id = Int(pathComponents.first ?? ""), id > 0 else { return nil }
+        return id
     }
 }

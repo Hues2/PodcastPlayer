@@ -6,7 +6,7 @@
 import Foundation
 
 enum Utils {
-    static func infoPlistValue<T>(for key: String) -> T? {
-        Bundle.main.infoDictionary?[key] as? T
+    static func infoPlistValue<T>(for key: String, in bundle: Bundle = .main) -> T? {
+        bundle.infoDictionary?[key] as? T
     }
 }

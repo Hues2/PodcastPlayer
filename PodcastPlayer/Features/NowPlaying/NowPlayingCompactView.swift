@@ -16,7 +16,7 @@ struct NowPlayingCompactView: View {
     private enum Layout {
         static let imageCornerRadius: CGFloat = 8
         static let imageSize: CGFloat = 64
-        static let padding: CGFloat = 24
+        static let padding: CGFloat = 16
     }
 
     var body: some View {

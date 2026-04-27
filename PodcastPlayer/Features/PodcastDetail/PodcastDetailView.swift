@@ -21,6 +21,9 @@ struct PodcastDetailView: View {
         self._viewModel = State(initialValue: PodcastDetailViewModel(id: id))
     }
 
+    // Share Image
+    @State private var shareImage: UIImage?
+
     // Scroll State
     @State private var scrollOffset: CGFloat = 0
     @State private var scrollPosition = ScrollPosition()
@@ -35,6 +38,10 @@ struct PodcastDetailView: View {
             .overlay(alignment: .top) { navigationBar(podcast: viewModel.podcast) }
             .toolbarVisibility(.hidden, for: .navigationBar)
             .task { await viewModel.fetchData() }
+            .task(id: viewModel.podcast?.imageURL) {
+                guard let imageURL = viewModel.podcast?.imageURL else { return }
+                shareImage = try? await KingfisherManager.shared.retrieveImage(with: imageURL).image
+            }
     }
 }
 
@@ -132,7 +139,13 @@ private extension PodcastDetailView {
     }
 
     func shareButton(url: URL) -> some View {
-        ShareLink(item: url) {
+        ShareLink(
+            item: url,
+            preview: SharePreview(
+                viewModel.podcast?.title ?? "",
+                image: Image(uiImage: shareImage ?? UIImage())
+            )
+        ) {
             navigationButtonLabel("square.and.arrow.up")
         }
         .buttonStyle(.plain)

@@ -17,10 +17,6 @@ extension Container {
     }
 
     var audioPlayerService: Factory<AudioPlayerService> {
-        return self {
-            MainActor.assumeIsolated {
-                AudioPlayerServiceImpl()
-            }
-        }.singleton
+        self { AudioPlayerServiceImpl() }.singleton
     }
 }

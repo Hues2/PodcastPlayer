@@ -66,20 +66,14 @@ The test target uses Apple’s `Testing` framework and currently covers:
 - `PodcastDetailViewModel`
 - `NowPlayingViewModel`
 - `NavigationRouter`
-- DTO to UI model mapping
+- `DTO to UI model mapping`
 - `Utils`
-
-Tests focus on state transitions, retry behavior, model mapping, navigation behavior, and playback edge cases.
 
 ## Running the Project
 
 1. Open the Xcode project/workspace for `PodcastPlayer`.
 2. Select the `PodcastPlayer` app scheme.
 3. Build and run on an iOS simulator or device.
-
-The API base URL is already configured in [`PodcastPlayer/PodcastPlayer/Info.plist`](/Users/gregross/projects/PodcastPlayer/PodcastPlayer/PodcastPlayer/Info.plist:1):
-
-- `API_BASE_URL = https://the-podcasts.fly.dev/v1/`
 
 ## Running Tests
 

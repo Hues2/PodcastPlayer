@@ -1,7 +1,13 @@
-<h1 align="center">
-  <img src="docs/app-icon.png" alt="PodcastPlayer icon" width="56" style="vertical-align: middle; margin-right: 10px; border-radius: 12px;" />
-  <span style="vertical-align: middle;">PodcastPlayer</span>
-</h1>
+<table align="center">
+  <tr>
+    <td valign="middle">
+      <img src="docs/app-icon.png" alt="PodcastPlayer icon" width="56" />
+    </td>
+    <td valign="middle">
+      <h1>PodcastPlayer</h1>
+    </td>
+  </tr>
+</table>
 
 PodcastPlayer is an iOS app built in SwiftUI. It presents a podcast list, drills into podcast details and episodes, and supports episode playback with compact and expanded now-playing experiences.
 

@@ -26,7 +26,7 @@ extension EpisodeUIModel {
         guard let id = dto.id else { return nil }
 
         self.id = id
-        self.title = dto.title ?? "Unknown Episode"
+        self.title = dto.title ?? .episode("Unknown Episode")
         self.description = dto.description
         self.duration = dto.duration
         self.episode = dto.episode

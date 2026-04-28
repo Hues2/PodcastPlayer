@@ -1,0 +1,9 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Unknown Episode" : {
+      "extractionState" : "manual"
+    }
+  },
+  "version" : "1.2"
+}

@@ -27,7 +27,7 @@ extension PodcastUIModel {
         guard let id = dto.id else { return nil }
 
         self.id = id
-        self.title = dto.title ?? "Unknown Podcast"
+        self.title = dto.title ?? .podcastDetail("Unknown Podcast")
         self.author = dto.author
         self.categoryIds = dto.categoryIds
         self.description = dto.description

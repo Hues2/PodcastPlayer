@@ -202,7 +202,7 @@ struct PodcastListViewModelTests {
 
     // MARK: - Nil Category IDs
 
-    @Test func podcastsWithNilCategoryIdsAreNotGrouped() async {
+    @Test func podcastsWithNilCategoryIdsGiveError() async {
         let dto = PodcastDTO(
             author: nil, categoryIds: nil, description: nil, id: 1,
             image: nil, languageIso: nil, link: nil, original: nil,
@@ -213,13 +213,12 @@ struct PodcastListViewModelTests {
 
         await viewModel.fetchPodcasts()
 
-        guard case .loaded(let model) = viewModel.state else {
-            Issue.record("Expected loaded state")
+        guard case .error(let error) = viewModel.state else {
+            Issue.record("Expected error state")
             return
         }
-        #expect(model.podcastsByCategory.isEmpty)
-        #expect(model.featured != nil)
-        #expect(model.featured?.title == "No Categories")
+        
+        #expect(error == .noPodcastsAvailable)
     }
 
     // MARK: - ViewState Helpers

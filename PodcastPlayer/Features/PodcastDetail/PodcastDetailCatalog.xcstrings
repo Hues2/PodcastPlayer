@@ -6,6 +6,9 @@
     },
     "No episodes available" : {
       "extractionState" : "manual"
+    },
+    "Unknown Podcast" : {
+      "extractionState" : "manual"
     }
   },
   "version" : "1.2"

@@ -17,6 +17,10 @@ extension String {
         String(localized: key, table: "PodcastDetailCatalog")
     }
 
+    static func episode(_ key: String.LocalizationValue) -> String {
+        String(localized: key, table: "EpisodeCatalog")
+    }
+
     static func error(_ key: String.LocalizationValue) -> String {
         String(localized: key, table: "ErrorCatalog")
     }
@@ -30,6 +34,10 @@ extension LocalizedStringKey {
 
     static func podcastDetail(_ key: String.LocalizationValue) -> LocalizedStringKey {
         LocalizedStringKey(String.podcastDetail(key))
+    }
+
+    static func episode(_ key: String.LocalizationValue) -> LocalizedStringKey {
+        LocalizedStringKey(String.episode(key))
     }
 
     static func error(_ key: String.LocalizationValue) -> LocalizedStringKey {

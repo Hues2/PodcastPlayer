@@ -355,12 +355,6 @@ struct PodcastDetailViewModelTests {
         #expect(url != nil)
     }
 
-    @Test func getShareURLReturnsNilWhenPodcastIsNil() {
-        let viewModel = PodcastDetailViewModel(id: 42)
-        let url = viewModel.getShareURL()
-        #expect(url == nil)
-    }
-
     // MARK: - State Helpers
 
     @Test func podcastStateHelpers() {

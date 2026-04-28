@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="docs/app-icon.png" alt="PodcastPlayer icon" width="56" style="vertical-align: middle; margin-right: 10px;" />
+  <img src="docs/app-icon.png" alt="PodcastPlayer icon" width="56" style="vertical-align: middle; margin-right: 10px; border-radius: 12px;" />
   <span style="vertical-align: middle;">PodcastPlayer</span>
 </h1>
 
